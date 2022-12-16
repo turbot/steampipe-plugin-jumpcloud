@@ -3,6 +3,7 @@ package jumpcloud
 import (
 	"context"
 
+	v2 "github.com/TheJumpCloud/jcapi-go/v2"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -43,6 +44,13 @@ func tableJumpcloudUserGroup(_ context.Context) *plugin.Table {
 				Description: "",
 				Type:        proto.ColumnType_BOOL,
 				Transform:   transform.FromField("Attributes.SambaEnabled"),
+			},
+			{
+				Name:        "members",
+				Description: "A list of the users associated with the group.",
+				Type:        proto.ColumnType_JSON,
+				Hydrate:     getJumpcloudUserGroupMemberships,
+				Transform:   transform.FromValue(),
 			},
 			{
 				Name:        "posix_groups",
@@ -153,4 +161,51 @@ func getJumpcloudUserGroup(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 	}
 
 	return data, nil
+}
+
+func getJumpcloudUserGroupMemberships(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	userGroupData := h.Item.(v2.UserGroup)
+
+	// Create client
+	client, err := getV2Client(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpcloudUserGroupMemberships", "connection_error", err)
+		return nil, err
+	}
+
+	var members []v2.GraphObject
+
+	localVarOptionals := map[string]interface{}{}
+
+	// Count the number of resource returned by the API.
+	// Set the value to 0.
+	resourceCount := 0
+
+	for {
+		data, _, err := client.UserGroupMembersMembershipApi.GraphUserGroupMembersList(ctx, userGroupData.Id, "application/json", "application/json", localVarOptionals)
+		if err != nil {
+			plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpcloudUserGroupMemberships", "query_error", err)
+			return nil, err
+		}
+
+		for _, i := range data {
+			// Increase the resource count by 1
+			resourceCount++
+
+			// append associated user details
+			members = append(members, *i.To)
+		}
+
+		// Return if no data
+		if len(data) == 0 {
+			break
+		}
+
+		// Else, set the skip param to list remaining resources.
+		// The attribute skip will skip the first n resources that are already listed,
+		// and start from the immediate next to list the remaining resources.
+		localVarOptionals["skip"] = int32(resourceCount)
+	}
+
+	return members, nil
 }
