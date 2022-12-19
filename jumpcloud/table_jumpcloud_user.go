@@ -35,7 +35,7 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "username",
-				Description: "Specifies the username.",
+				Description: "The technical user name.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -45,7 +45,7 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "email",
-				Description: "The comapny email of the user.",
+				Description: "The users e-mail address, which is also used for log ins. E-mail addresses have to be unique across all JumpCloud accounts, there cannot be two users with the same e-mail address.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -64,13 +64,18 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
+				Name:        "suspended",
+				Description: "True, if the user account is suspended.",
+				Type:        proto.ColumnType_BOOL,
+			},
+			{
 				Name:        "allow_public_key",
 				Description: "",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
 				Name:        "company",
-				Description: "",
+				Description: "The name of the company.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -83,10 +88,9 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 				Description: "",
 				Type:        proto.ColumnType_STRING,
 			},
-
 			{
 				Name:        "employee_identifier",
-				Description: "",
+				Description: "A unique identifier of the user inside an organization.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -116,47 +120,47 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "externally_managed",
-				Description: "",
+				Description: "Specifies whether the user is externally managed.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
 				Name:        "firstname",
-				Description: "",
+				Description: "The user's first name.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "job_title",
-				Description: "",
+				Description: "The user's job title.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "lastname",
-				Description: "",
+				Description: "The user's last name.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "location",
-				Description: "",
+				Description: "The user's location.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "middlename",
-				Description: "",
+				Description: "The user's middle name.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "organization",
-				Description: "",
+				Description: "The name of the organization the user is working with.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "password_expiration_date",
-				Description: "",
+				Description: "Specifies the timestamp when the password will expire.",
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
 				Name:        "password_expired",
-				Description: "",
+				Description: "True if the password was expired.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
@@ -168,6 +172,36 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 				Name:        "passwordless_sudo",
 				Description: "",
 				Type:        proto.ColumnType_BOOL,
+			},
+			{
+				Name:        "public_key",
+				Description: "The public key for the user.",
+				Type:        proto.ColumnType_STRING,
+			},
+			{
+				Name:        "totp_enabled",
+				Description: "If tru, TOTP is enabled for the user.",
+				Type:        proto.ColumnType_BOOL,
+			},
+			{
+				Name:        "mfa",
+				Description: "Specifies the MFA configuration for the user.",
+				Type:        proto.ColumnType_JSON,
+			},
+			{
+				Name:        "attributes",
+				Description: "A list of attributes for the user.",
+				Type:        proto.ColumnType_JSON,
+			},
+			{
+				Name:        "ssh_keys",
+				Description: "A list of SSH public keys for the user.",
+				Type:        proto.ColumnType_JSON,
+			},
+			{
+				Name:        "tags",
+				Description: "A list of tags attached with the user.",
+				Type:        proto.ColumnType_JSON,
 			},
 
 			// Steampipe standard columns

@@ -20,8 +20,9 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			Schema:      ConfigSchema,
 		},
 		TableMap: map[string]*plugin.Table{
-			"jumpcloud_user":       tableJumpcloudUser(ctx),
-			"jumpcloud_user_group": tableJumpcloudUserGroup(ctx),
+			"jumpcloud_application": tableJumpcloudApplication(ctx),
+			"jumpcloud_user":        tableJumpcloudUser(ctx),
+			"jumpcloud_user_group":  tableJumpcloudUserGroup(ctx),
 		},
 	}
 

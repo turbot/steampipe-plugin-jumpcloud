@@ -12,7 +12,7 @@ import (
 
 func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, error) {
 	// Load clientOptions from cache
-	sessionCacheKey := "jumpcloud.apiclient"
+	sessionCacheKey := "jumpcloud.apiclient_v2"
 	if cachedData, ok := d.ConnectionManager.Cache.Get(sessionCacheKey); ok {
 		return cachedData.(*jcapiv2.APIClient), nil
 	}
@@ -39,7 +39,7 @@ func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, 
 
 func getV1Client(ctx context.Context, d *plugin.QueryData) (*jcapiv1.APIClient, error) {
 	// Load clientOptions from cache
-	sessionCacheKey := "jumpcloud.apiclient"
+	sessionCacheKey := "jumpcloud.apiclient_v1"
 	if cachedData, ok := d.ConnectionManager.Cache.Get(sessionCacheKey); ok {
 		return cachedData.(*jcapiv1.APIClient), nil
 	}
