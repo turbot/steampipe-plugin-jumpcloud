@@ -50,7 +50,7 @@ func tableJumpcloudApplication(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "beta",
-				Description: "If tru, the application is in beta.",
+				Description: "If true, the application is in beta.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
@@ -60,7 +60,7 @@ func tableJumpcloudApplication(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "sso_url",
-				Description: "The SSO URL suffix to use",
+				Description: "The SSO URL suffix to use.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
