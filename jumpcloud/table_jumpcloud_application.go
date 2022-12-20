@@ -3,6 +3,7 @@ package jumpcloud
 import (
 	"context"
 
+	v1 "github.com/TheJumpCloud/jcapi-go/v1"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -66,6 +67,13 @@ func tableJumpcloudApplication(_ context.Context) *plugin.Table {
 				Name:        "config",
 				Description: "Specifies the application configuration.",
 				Type:        proto.ColumnType_JSON,
+			},
+			{
+				Name:        "user_groups",
+				Description: "Specifies the application configuration.",
+				Type:        proto.ColumnType_JSON,
+				Hydrate:     getJumpcloudApplicationGroupAssociation,
+				Transform:   transform.FromValue(),
 			},
 
 			// Steampipe standard columns
@@ -166,6 +174,30 @@ func getJumpcloudApplication(ctx context.Context, d *plugin.QueryData, _ *plugin
 		}
 
 		// Else return the error
+		return nil, err
+	}
+
+	return data, nil
+}
+
+func getJumpcloudApplicationGroupAssociation(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	// Create client
+	client, err := getV2Client(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_application.getJumpcloudApplication", "connection_error", err)
+		return nil, err
+	}
+
+	applicationID := h.Item.(v1.Application).Id
+
+	// Required quals cannot be empty
+	if applicationID == "" {
+		return nil, nil
+	}
+
+	data, _, err := client.ApplicationsApi.GraphApplicationTraverseUserGroup(ctx, applicationID, "application/json", "application/json", nil)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_application.getJumpcloudApplication", "query_error", err)
 		return nil, err
 	}
 
