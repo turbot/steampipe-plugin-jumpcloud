@@ -3,6 +3,7 @@ package jumpcloud
 import (
 	"context"
 
+	v1 "github.com/Subhajit97/jcapi-go/v1"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -16,6 +17,10 @@ func tableJumpcloudOrganization(_ context.Context) *plugin.Table {
 		Description: "JumpCloud Organization",
 		List: &plugin.ListConfig{
 			Hydrate: listJumpcloudOrganizations,
+		},
+		Get: &plugin.GetConfig{
+			Hydrate:    getJumpcloudOrganization,
+			KeyColumns: plugin.SingleColumn("id"),
 		},
 		Columns: []*plugin.Column{
 			{
@@ -32,6 +37,42 @@ func tableJumpcloudOrganization(_ context.Context) *plugin.Table {
 				Name:        "logo_url",
 				Description: "The organization logo image URL.",
 				Type:        proto.ColumnType_STRING,
+			},
+			{
+				Name:        "created",
+				Description: "The date and time when the organization was created.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getJumpcloudOrganization,
+			},
+			{
+				Name:        "has_credit_card",
+				Description: "True, if credit card details has been provided for billing.",
+				Type:        proto.ColumnType_BOOL,
+				Hydrate:     getJumpcloudOrganization,
+			},
+			{
+				Name:        "has_stripe_customer_id",
+				Description: "True, if a Stripe customer ID has been provided..",
+				Type:        proto.ColumnType_BOOL,
+				Hydrate:     getJumpcloudOrganization,
+			},
+			{
+				Name:        "total_billing_estimate",
+				Description: "Indicates the estimated billing for the organization.",
+				Type:        proto.ColumnType_INT,
+				Hydrate:     getJumpcloudOrganization,
+			},
+			{
+				Name:        "entitlement",
+				Description: "Specifies the billing entitlement.",
+				Type:        proto.ColumnType_JSON,
+				Hydrate:     getJumpcloudOrganization,
+			},
+			{
+				Name:        "settings",
+				Description: "Specifies the organization settings.",
+				Type:        proto.ColumnType_JSON,
+				Hydrate:     getJumpcloudOrganization,
 			},
 
 			// Steampipe standard columns
@@ -80,11 +121,11 @@ func listJumpcloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plu
 			return nil, err
 		}
 
-		for _, user := range orgs.Results {
+		for _, org := range orgs.Results {
 			// Increase the resource count by 1
 			resourceCount++
 
-			d.StreamListItem(ctx, user)
+			d.StreamListItem(ctx, org)
 
 			// Context can be cancelled due to manual cancellation or the limit has been hit
 			if d.RowsRemaining(ctx) == 0 {
@@ -104,4 +145,42 @@ func listJumpcloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plu
 	}
 
 	return nil, nil
+}
+
+//// HYDRATE FUNCTIONS
+
+func getJumpcloudOrganization(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	// Create client
+	client, err := getV1Client(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_organization.getJumpcloudOrganization", "connection_error", err)
+		return nil, err
+	}
+
+	var organizationID string
+	if h.Item != nil {
+		organizationID = h.Item.(v1.OrganizationslistResults).Id
+	} else {
+		organizationID = d.EqualsQualString("id")
+	}
+
+	// Required quals cannot be empty
+	if organizationID == "" {
+		return nil, nil
+	}
+
+	data, resp, err := client.OrganizationsApi.OrganizationGet(ctx, organizationID, "application/json", "application/json", nil)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_user.getJumpcloudUser", "query_error", err)
+
+		// Ignore if resource not found error
+		if resp.StatusCode == 404 {
+			return nil, nil
+		}
+
+		// Else return the error
+		return nil, err
+	}
+
+	return data, nil
 }

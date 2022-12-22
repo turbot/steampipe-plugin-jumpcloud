@@ -3,7 +3,7 @@ package jumpcloud
 import (
 	"context"
 
-	v1 "github.com/TheJumpCloud/jcapi-go/v1"
+	v1 "github.com/Subhajit97/jcapi-go/v1"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -60,10 +60,17 @@ func tableJumpcloudRadiusServer(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "groups",
+				Name:        "user_groups",
 				Description: "A list of user groups associated with the server.",
 				Type:        proto.ColumnType_JSON,
 				Hydrate:     getJumpcloudRadiusServerGroupAssociations,
+				Transform:   transform.FromValue(),
+			},
+			{
+				Name:        "users",
+				Description: "A list of users associated with the server.",
+				Type:        proto.ColumnType_JSON,
+				Hydrate:     getJumpcloudRadiusServerUserAssociations,
 				Transform:   transform.FromValue(),
 			},
 			{
@@ -168,6 +175,29 @@ func getJumpcloudRadiusServerGroupAssociations(ctx context.Context, d *plugin.Qu
 	data, _, err := client.GraphApi.GraphRadiusServerTraverseUserGroup(ctx, serverID, "application/json", "application/json", nil)
 	if err != nil {
 		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerAssociations", "query_error", err)
+		return nil, err
+	}
+
+	return data, nil
+}
+
+func getJumpcloudRadiusServerUserAssociations(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	// Create client
+	client, err := getV2Client(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerUserAssociations", "connection_error", err)
+		return nil, err
+	}
+	serverID := h.Item.(v1.Radiusserver).Id
+
+	// Required quals cannot be empty
+	if serverID == "" {
+		return nil, nil
+	}
+
+	data, _, err := client.GraphApi.GraphRadiusServerTraverseUser(ctx, serverID, "application/json", "application/json", nil)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerUserAssociations", "query_error", err)
 		return nil, err
 	}
 

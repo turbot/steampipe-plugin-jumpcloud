@@ -3,7 +3,7 @@ package jumpcloud
 import (
 	"context"
 
-	v2 "github.com/TheJumpCloud/jcapi-go/v2"
+	v2 "github.com/Subhajit97/jcapi-go/v2"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"

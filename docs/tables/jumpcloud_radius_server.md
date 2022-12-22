@@ -30,7 +30,7 @@ where
   mfa = 'DISABLED';
 ```
 
-### List all groups that can access the server
+### List all users that can access the server
 
 ```sql
 select
@@ -38,9 +38,9 @@ select
   s.id,
   s.organization,
   s.network_source_ip,
-  ug.name as group_name
+  ug.display_name as user_name
 from
   jumpcloud_radius_server as s,
-  jsonb_array_elements(groups) as g
-  left join jumpcloud_user_group as ug on g ->> 'id' = ug.id;
+  jsonb_array_elements(users) as u
+  left join jumpcloud_user as ug on u ->> 'id' = ug.id;
 ```

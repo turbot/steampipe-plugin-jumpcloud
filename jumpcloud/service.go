@@ -6,8 +6,8 @@ import (
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 
-	jcapiv1 "github.com/TheJumpCloud/jcapi-go/v1"
-	jcapiv2 "github.com/TheJumpCloud/jcapi-go/v2"
+	jcapiv1 "github.com/Subhajit97/jcapi-go/v1"
+	jcapiv2 "github.com/Subhajit97/jcapi-go/v2"
 )
 
 func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, error) {
