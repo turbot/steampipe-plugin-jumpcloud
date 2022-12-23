@@ -89,8 +89,18 @@ func tableJumpCloudOrganization(_ context.Context) *plugin.Table {
 //// LIST FUNCTION
 
 func listJumpCloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	// Create client
-	client, err := getV1Client(ctx, d)
+	/*
+		Create client
+
+		For a multi-tenant admin, when making API requests to JumpCloud
+		x-org-id must be passed in the header with a valid organization ID
+		to which the client would like to make the request.
+
+		But Organization APIs doesn't allow organization selection via header, and
+		returns an error:
+		Status: 403 Forbidden, Body: {"message":"Forbidden: organization selection not allowed via header","error":"Forbidden: organization selection not allowed via header"}
+	*/
+	client, err := getOrganizationAPIClient(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("jumpcloud_organization.listJumpCloudOrganizations", "connection_error", err)
 		return nil, err
@@ -150,8 +160,18 @@ func listJumpCloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plu
 //// HYDRATE FUNCTIONS
 
 func getJumpCloudOrganization(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	// Create client
-	client, err := getV1Client(ctx, d)
+	/*
+		Create client
+
+		For a multi-tenant admin, when making API requests to JumpCloud
+		x-org-id must be passed in the header with a valid organization ID
+		to which the client would like to make the request.
+
+		But Organization APIs doesn't allow organization selection via header, and
+		returns an error:
+		Status: 403 Forbidden, Body: {"message":"Forbidden: organization selection not allowed via header","error":"Forbidden: organization selection not allowed via header"}
+	*/
+	client, err := getOrganizationAPIClient(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("jumpcloud_organization.getJumpCloudOrganization", "connection_error", err)
 		return nil, err

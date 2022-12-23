@@ -68,5 +68,5 @@ from
   jumpcloud_user
 where id not in (
   select user_id from user_associated_with_groups
-)
+);
 ```

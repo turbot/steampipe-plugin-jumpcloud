@@ -7,10 +7,15 @@ import (
 
 type jumpCloudConfig struct {
 	APIKey *string `cty:"api_key"`
+	OrgID  *string `cty:"org_id"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
 	"api_key": {
+		Type: schema.TypeString,
+	},
+
+	"org_id": {
 		Type: schema.TypeString,
 	},
 }
