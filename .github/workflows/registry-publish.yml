@@ -3,9 +3,11 @@ name: Build and Deploy OCI Image
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   registry_publish_workflow:
     uses: turbot/steampipe-workflows/.github/workflows/registry-publish.yml@main
     secrets: inherit
+    with:
+      releaseTimeout: 60m

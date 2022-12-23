@@ -5,7 +5,7 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
 )
 
-type jumpcloudConfig struct {
+type jumpCloudConfig struct {
 	APIKey *string `cty:"api_key"`
 }
 
@@ -16,14 +16,14 @@ var ConfigSchema = map[string]*schema.Attribute{
 }
 
 func ConfigInstance() interface{} {
-	return &jumpcloudConfig{}
+	return &jumpCloudConfig{}
 }
 
 // GetConfig :: retrieve and cast connection config from query data
-func GetConfig(connection *plugin.Connection) jumpcloudConfig {
+func GetConfig(connection *plugin.Connection) jumpCloudConfig {
 	if connection == nil || connection.Config == nil {
-		return jumpcloudConfig{}
+		return jumpCloudConfig{}
 	}
-	config, _ := connection.Config.(jumpcloudConfig)
+	config, _ := connection.Config.(jumpCloudConfig)
 	return config
 }

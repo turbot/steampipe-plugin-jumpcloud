@@ -33,6 +33,7 @@ func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, 
 	client := jcapiv2.NewAPIClient(config)
 
 	// save clientOptions in cache
+	// data will be cached per connection basis
 	d.ConnectionManager.Cache.Set(sessionCacheKey, client)
 
 	return client, nil
@@ -61,6 +62,7 @@ func getV1Client(ctx context.Context, d *plugin.QueryData) (*jcapiv1.APIClient, 
 	client := jcapiv1.NewAPIClient(config)
 
 	// save clientOptions in cache
+	// data will be cached per connection basis
 	d.ConnectionManager.Cache.Set(sessionCacheKey, client)
 
 	return client, nil

@@ -10,15 +10,15 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpcloudUser(_ context.Context) *plugin.Table {
+func tableJumpCloudUser(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "jumpcloud_user",
 		Description: "JumpCloud User",
 		List: &plugin.ListConfig{
-			Hydrate: listJumpcloudUsers,
+			Hydrate: listJumpCloudUsers,
 		},
 		Get: &plugin.GetConfig{
-			Hydrate:    getJumpcloudUser,
+			Hydrate:    getJumpCloudUser,
 			KeyColumns: plugin.SingleColumn("id"),
 		},
 		Columns: []*plugin.Column{
@@ -70,7 +70,7 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "allow_public_key",
-				Description: "",
+				Description: "If true, public keys are allowed for the user.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
@@ -124,9 +124,10 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
-				Name:        "firstname",
+				Name:        "first_name",
 				Description: "The user's first name.",
 				Type:        proto.ColumnType_STRING,
+				Transform:   transform.FromField("Firstname"),
 			},
 			{
 				Name:        "job_title",
@@ -134,9 +135,10 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "lastname",
+				Name:        "last_name",
 				Description: "The user's last name.",
 				Type:        proto.ColumnType_STRING,
+				Transform:   transform.FromField("Lastname"),
 			},
 			{
 				Name:        "location",
@@ -144,9 +146,10 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_STRING,
 			},
 			{
-				Name:        "middlename",
+				Name:        "middle_name",
 				Description: "The user's middle name.",
 				Type:        proto.ColumnType_STRING,
+				Transform:   transform.FromField("Middlename"),
 			},
 			{
 				Name:        "organization",
@@ -217,11 +220,11 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpcloudUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV1Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user.listJumpcloudUserGroups", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_user.listJumpCloudUsers", "connection_error", err)
 		return nil, err
 	}
 
@@ -246,7 +249,7 @@ func listJumpcloudUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 	for {
 		users, _, err := client.SystemusersApi.SystemusersList(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_user.listJumpcloudUserGroups", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_user.listJumpCloudUsers", "query_error", err)
 			return nil, err
 		}
 
@@ -278,11 +281,11 @@ func listJumpcloudUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 
 //// HYDRATE FUNCTIONS
 
-func getJumpcloudUser(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudUser(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV1Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user.getJumpcloudUser", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_user.getJumpCloudUser", "connection_error", err)
 		return nil, err
 	}
 	userID := d.EqualsQualString("id")
@@ -294,7 +297,7 @@ func getJumpcloudUser(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydrat
 
 	data, resp, err := client.SystemusersApi.SystemusersGet(ctx, userID, "application/json", "application/json", nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user.getJumpcloudUser", "query_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_user.getJumpCloudUser", "query_error", err)
 
 		// Ignore if resource not found error
 		if resp.StatusCode == 404 {

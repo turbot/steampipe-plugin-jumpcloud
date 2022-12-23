@@ -11,15 +11,15 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpcloudOrganization(_ context.Context) *plugin.Table {
+func tableJumpCloudOrganization(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "jumpcloud_organization",
 		Description: "JumpCloud Organization",
 		List: &plugin.ListConfig{
-			Hydrate: listJumpcloudOrganizations,
+			Hydrate: listJumpCloudOrganizations,
 		},
 		Get: &plugin.GetConfig{
-			Hydrate:    getJumpcloudOrganization,
+			Hydrate:    getJumpCloudOrganization,
 			KeyColumns: plugin.SingleColumn("id"),
 		},
 		Columns: []*plugin.Column{
@@ -42,37 +42,37 @@ func tableJumpcloudOrganization(_ context.Context) *plugin.Table {
 				Name:        "created",
 				Description: "The date and time when the organization was created.",
 				Type:        proto.ColumnType_STRING,
-				Hydrate:     getJumpcloudOrganization,
+				Hydrate:     getJumpCloudOrganization,
 			},
 			{
 				Name:        "has_credit_card",
 				Description: "True, if credit card details has been provided for billing.",
 				Type:        proto.ColumnType_BOOL,
-				Hydrate:     getJumpcloudOrganization,
+				Hydrate:     getJumpCloudOrganization,
 			},
 			{
 				Name:        "has_stripe_customer_id",
 				Description: "True, if a Stripe customer ID has been provided..",
 				Type:        proto.ColumnType_BOOL,
-				Hydrate:     getJumpcloudOrganization,
+				Hydrate:     getJumpCloudOrganization,
 			},
 			{
 				Name:        "total_billing_estimate",
 				Description: "Indicates the estimated billing for the organization.",
 				Type:        proto.ColumnType_INT,
-				Hydrate:     getJumpcloudOrganization,
+				Hydrate:     getJumpCloudOrganization,
 			},
 			{
 				Name:        "entitlement",
 				Description: "Specifies the billing entitlement.",
 				Type:        proto.ColumnType_JSON,
-				Hydrate:     getJumpcloudOrganization,
+				Hydrate:     getJumpCloudOrganization,
 			},
 			{
 				Name:        "settings",
 				Description: "Specifies the organization settings.",
 				Type:        proto.ColumnType_JSON,
-				Hydrate:     getJumpcloudOrganization,
+				Hydrate:     getJumpCloudOrganization,
 			},
 
 			// Steampipe standard columns
@@ -88,11 +88,11 @@ func tableJumpcloudOrganization(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpcloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV1Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_organization.listJumpcloudOrganizations", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_organization.listJumpCloudOrganizations", "connection_error", err)
 		return nil, err
 	}
 
@@ -117,7 +117,7 @@ func listJumpcloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plu
 	for {
 		orgs, _, err := client.OrganizationsApi.OrganizationList(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_organization.listJumpcloudOrganizations", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_organization.listJumpCloudOrganizations", "query_error", err)
 			return nil, err
 		}
 
@@ -149,11 +149,11 @@ func listJumpcloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plu
 
 //// HYDRATE FUNCTIONS
 
-func getJumpcloudOrganization(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudOrganization(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV1Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_organization.getJumpcloudOrganization", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_organization.getJumpCloudOrganization", "connection_error", err)
 		return nil, err
 	}
 
@@ -171,7 +171,7 @@ func getJumpcloudOrganization(ctx context.Context, d *plugin.QueryData, h *plugi
 
 	data, resp, err := client.OrganizationsApi.OrganizationGet(ctx, organizationID, "application/json", "application/json", nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user.getJumpcloudUser", "query_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_organization.getJumpCloudOrganization", "query_error", err)
 
 		// Ignore if resource not found error
 		if resp.StatusCode == 404 {

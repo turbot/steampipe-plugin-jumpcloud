@@ -11,12 +11,12 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpcloudRadiusServer(_ context.Context) *plugin.Table {
+func tableJumpCloudRadiusServer(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "jumpcloud_radius_server",
 		Description: "JumpCloud RADIUS Server",
 		List: &plugin.ListConfig{
-			Hydrate: listJumpcloudRadiusServers,
+			Hydrate: listJumpCloudRadiusServers,
 		},
 		Columns: []*plugin.Column{
 			{
@@ -63,14 +63,14 @@ func tableJumpcloudRadiusServer(_ context.Context) *plugin.Table {
 				Name:        "user_groups",
 				Description: "A list of user groups associated with the server.",
 				Type:        proto.ColumnType_JSON,
-				Hydrate:     getJumpcloudRadiusServerGroupAssociations,
+				Hydrate:     getJumpCloudRadiusServerGroupAssociations,
 				Transform:   transform.FromValue(),
 			},
 			{
 				Name:        "users",
 				Description: "A list of users associated with the server.",
 				Type:        proto.ColumnType_JSON,
-				Hydrate:     getJumpcloudRadiusServerUserAssociations,
+				Hydrate:     getJumpCloudRadiusServerUserAssociations,
 				Transform:   transform.FromValue(),
 			},
 			{
@@ -89,7 +89,7 @@ func tableJumpcloudRadiusServer(_ context.Context) *plugin.Table {
 				Name:        "title",
 				Description: "Title of the resource.",
 				Type:        proto.ColumnType_STRING,
-				Transform:   transform.FromField("Displayname"),
+				Transform:   transform.FromField("Name"),
 			},
 		},
 	}
@@ -97,11 +97,11 @@ func tableJumpcloudRadiusServer(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpcloudRadiusServers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudRadiusServers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV1Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_radius_server.listJumpcloudRadiusServers", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_radius_server.listJumpCloudRadiusServers", "connection_error", err)
 		return nil, err
 	}
 
@@ -126,7 +126,7 @@ func listJumpcloudRadiusServers(ctx context.Context, d *plugin.QueryData, _ *plu
 	for {
 		servers, _, err := client.RadiusServersApi.RadiusServersList(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_radius_server.listJumpcloudRadiusServers", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_radius_server.listJumpCloudRadiusServers", "query_error", err)
 			return nil, err
 		}
 
@@ -158,11 +158,11 @@ func listJumpcloudRadiusServers(ctx context.Context, d *plugin.QueryData, _ *plu
 
 //// HYDRATE FUNCTIONS
 
-func getJumpcloudRadiusServerGroupAssociations(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudRadiusServerGroupAssociations(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerAssociations", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpCloudRadiusServerGroupAssociations", "connection_error", err)
 		return nil, err
 	}
 	serverID := h.Item.(v1.Radiusserver).Id
@@ -174,18 +174,18 @@ func getJumpcloudRadiusServerGroupAssociations(ctx context.Context, d *plugin.Qu
 
 	data, _, err := client.GraphApi.GraphRadiusServerTraverseUserGroup(ctx, serverID, "application/json", "application/json", nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerAssociations", "query_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpCloudRadiusServerGroupAssociations", "query_error", err)
 		return nil, err
 	}
 
 	return data, nil
 }
 
-func getJumpcloudRadiusServerUserAssociations(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudRadiusServerUserAssociations(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerUserAssociations", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpCloudRadiusServerUserAssociations", "connection_error", err)
 		return nil, err
 	}
 
@@ -203,7 +203,7 @@ func getJumpcloudRadiusServerUserAssociations(ctx context.Context, d *plugin.Que
 
 	data, _, err := client.GraphApi.GraphRadiusServerTraverseUser(ctx, serverID, "application/json", "application/json", nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerUserAssociations", "query_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpCloudRadiusServerUserAssociations", "query_error", err)
 		return nil, err
 	}
 

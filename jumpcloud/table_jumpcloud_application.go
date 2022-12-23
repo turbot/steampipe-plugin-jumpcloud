@@ -11,15 +11,15 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpcloudApplication(_ context.Context) *plugin.Table {
+func tableJumpCloudApplication(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "jumpcloud_application",
 		Description: "JumpCloud Application",
 		List: &plugin.ListConfig{
-			Hydrate: listJumpcloudApplications,
+			Hydrate: listJumpCloudApplications,
 		},
 		Get: &plugin.GetConfig{
-			Hydrate:    getJumpcloudApplication,
+			Hydrate:    getJumpCloudApplication,
 			KeyColumns: plugin.SingleColumn("id"),
 		},
 		Columns: []*plugin.Column{
@@ -72,7 +72,7 @@ func tableJumpcloudApplication(_ context.Context) *plugin.Table {
 				Name:        "user_groups",
 				Description: "Specifies the application configuration.",
 				Type:        proto.ColumnType_JSON,
-				Hydrate:     getJumpcloudApplicationGroupAssociation,
+				Hydrate:     getJumpCloudApplicationGroupAssociation,
 				Transform:   transform.FromValue(),
 			},
 
@@ -89,11 +89,11 @@ func tableJumpcloudApplication(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpcloudApplications(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudApplications(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV1Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_application.listJumpcloudApplications", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_application.listJumpCloudApplications", "connection_error", err)
 		return nil, err
 	}
 
@@ -118,7 +118,7 @@ func listJumpcloudApplications(ctx context.Context, d *plugin.QueryData, _ *plug
 	for {
 		applicationList, _, err := client.ApplicationsApi.ApplicationsList(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_application.listJumpcloudApplications", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_application.listJumpCloudApplications", "query_error", err)
 			return nil, err
 		}
 
@@ -150,11 +150,11 @@ func listJumpcloudApplications(ctx context.Context, d *plugin.QueryData, _ *plug
 
 //// HYDRATE FUNCTIONS
 
-func getJumpcloudApplication(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudApplication(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV1Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_application.getJumpcloudApplication", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_application.getJumpCloudApplication", "connection_error", err)
 		return nil, err
 	}
 	applicationID := d.EqualsQualString("id")
@@ -166,7 +166,7 @@ func getJumpcloudApplication(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 	data, resp, err := client.ApplicationsApi.ApplicationsGet(ctx, applicationID, nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_application.getJumpcloudApplication", "query_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_application.getJumpCloudApplication", "query_error", err)
 
 		// Ignore if resource not found error
 		if resp.StatusCode == 404 {
@@ -180,11 +180,11 @@ func getJumpcloudApplication(ctx context.Context, d *plugin.QueryData, _ *plugin
 	return data, nil
 }
 
-func getJumpcloudApplicationGroupAssociation(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudApplicationGroupAssociation(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_application.getJumpcloudApplication", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_application.getJumpCloudApplicationGroupAssociation", "connection_error", err)
 		return nil, err
 	}
 
@@ -202,7 +202,7 @@ func getJumpcloudApplicationGroupAssociation(ctx context.Context, d *plugin.Quer
 
 	data, _, err := client.ApplicationsApi.GraphApplicationTraverseUserGroup(ctx, applicationID, "application/json", "application/json", nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_application.getJumpcloudApplication", "query_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_application.getJumpCloudApplicationGroupAssociation", "query_error", err)
 		return nil, err
 	}
 

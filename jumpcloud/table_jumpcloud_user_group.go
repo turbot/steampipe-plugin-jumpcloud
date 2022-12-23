@@ -11,15 +11,15 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpcloudUserGroup(_ context.Context) *plugin.Table {
+func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 	return &plugin.Table{
 		Name:        "jumpcloud_user_group",
 		Description: "JumpCloud User Group",
 		List: &plugin.ListConfig{
-			Hydrate: listJumpcloudUserGroups,
+			Hydrate: listJumpCloudUserGroups,
 		},
 		Get: &plugin.GetConfig{
-			Hydrate:    getJumpcloudUserGroup,
+			Hydrate:    getJumpCloudUserGroup,
 			KeyColumns: plugin.SingleColumn("id"),
 		},
 		Columns: []*plugin.Column{
@@ -49,7 +49,7 @@ func tableJumpcloudUserGroup(_ context.Context) *plugin.Table {
 				Name:        "members",
 				Description: "A list of the users associated with the group.",
 				Type:        proto.ColumnType_JSON,
-				Hydrate:     getJumpcloudUserGroupMemberships,
+				Hydrate:     getJumpCloudUserGroupMemberships,
 				Transform:   transform.FromValue(),
 			},
 			{
@@ -72,11 +72,11 @@ func tableJumpcloudUserGroup(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpcloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user_group.listJumpcloudUserGroups", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_user_group.listJumpCloudUserGroups", "connection_error", err)
 		return nil, err
 	}
 
@@ -101,7 +101,7 @@ func listJumpcloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin
 	for {
 		userGroups, _, err := client.UserGroupsApi.GroupsUserList(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_user_group.listJumpcloudUserGroups", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_user_group.listJumpCloudUserGroups", "query_error", err)
 			return nil, err
 		}
 
@@ -133,11 +133,11 @@ func listJumpcloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 //// HYDRATE FUNCTIONS
 
-func getJumpcloudUserGroup(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudUserGroup(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpcloudUserGroup", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpCloudUserGroup", "connection_error", err)
 		return nil, err
 	}
 	userGroupID := d.EqualsQualString("id")
@@ -149,7 +149,7 @@ func getJumpcloudUserGroup(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 
 	data, resp, err := client.UserGroupsApi.GroupsUserGet(ctx, userGroupID, "application/json", "application/json", nil)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpcloudUserGroup", "query_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpCloudUserGroup", "query_error", err)
 
 		// Ignore if resource not found error
 		if resp.StatusCode == 404 {
@@ -163,7 +163,7 @@ func getJumpcloudUserGroup(ctx context.Context, d *plugin.QueryData, _ *plugin.H
 	return data, nil
 }
 
-func getJumpcloudUserGroupMemberships(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudUserGroupMemberships(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 
 	var userGroupID string
 	if h.Item != nil {
@@ -175,7 +175,7 @@ func getJumpcloudUserGroupMemberships(ctx context.Context, d *plugin.QueryData, 
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpcloudUserGroupMemberships", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpCloudUserGroupMemberships", "connection_error", err)
 		return nil, err
 	}
 
@@ -190,7 +190,7 @@ func getJumpcloudUserGroupMemberships(ctx context.Context, d *plugin.QueryData, 
 	for {
 		data, _, err := client.UserGroupMembersMembershipApi.GraphUserGroupMembersList(ctx, userGroupID, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpcloudUserGroupMemberships", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpCloudUserGroupMemberships", "query_error", err)
 			return nil, err
 		}
 
