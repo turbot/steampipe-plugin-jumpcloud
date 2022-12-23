@@ -188,7 +188,12 @@ func getJumpcloudApplicationGroupAssociation(ctx context.Context, d *plugin.Quer
 		return nil, err
 	}
 
-	applicationID := h.Item.(v1.Application).Id
+	var applicationID string
+	if h.Item != nil {
+		applicationID = h.Item.(v1.Application).Id
+	} else {
+		applicationID = d.EqualsQualString("id")
+	}
 
 	// Required quals cannot be empty
 	if applicationID == "" {

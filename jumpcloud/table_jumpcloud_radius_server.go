@@ -188,7 +188,13 @@ func getJumpcloudRadiusServerUserAssociations(ctx context.Context, d *plugin.Que
 		plugin.Logger(ctx).Error("jumpcloud_radius_server.getJumpcloudRadiusServerUserAssociations", "connection_error", err)
 		return nil, err
 	}
-	serverID := h.Item.(v1.Radiusserver).Id
+
+	var serverID string
+	if h.Item != nil {
+		serverID = h.Item.(v1.Radiusserver).Id
+	} else {
+		serverID = d.EqualsQualString("id")
+	}
 
 	// Required quals cannot be empty
 	if serverID == "" {

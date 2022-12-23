@@ -10,6 +10,7 @@ import (
 	jcapiv2 "github.com/Subhajit97/jcapi-go/v2"
 )
 
+// Create service client for JumpCloud's V2 API
 func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, error) {
 	// Load clientOptions from cache
 	sessionCacheKey := "jumpcloud.apiclient_v2"
@@ -37,6 +38,7 @@ func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, 
 	return client, nil
 }
 
+// Create service client for JumpCloud's V1 API
 func getV1Client(ctx context.Context, d *plugin.QueryData) (*jcapiv1.APIClient, error) {
 	// Load clientOptions from cache
 	sessionCacheKey := "jumpcloud.apiclient_v1"
