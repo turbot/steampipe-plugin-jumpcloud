@@ -75,7 +75,7 @@ func tableJumpcloudRadiusServer(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "tag_names",
-				Description: "",
+				Description: "Specifies a list of tag names attached with the server.",
 				Type:        proto.ColumnType_JSON,
 			},
 			{

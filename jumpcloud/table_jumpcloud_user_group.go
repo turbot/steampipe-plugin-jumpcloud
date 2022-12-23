@@ -54,7 +54,7 @@ func tableJumpcloudUserGroup(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "posix_groups",
-				Description: "",
+				Description: "A list of POSIX groups.",
 				Type:        proto.ColumnType_JSON,
 				Transform:   transform.FromField("Attributes.PosixGroups"),
 			},

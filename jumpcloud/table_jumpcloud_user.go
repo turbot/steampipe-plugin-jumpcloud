@@ -80,12 +80,12 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "cost_center",
-				Description: "",
+				Description: "Specifies the cost center.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "department",
-				Description: "",
+				Description: "Specifies the department the employee is part of.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -95,27 +95,27 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "employee_type",
-				Description: "",
+				Description: "The employment type of the employee.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "enable_manage_uid",
-				Description: "",
+				Description: "If true, a managed UID is generated for the user.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
 				Name:        "enable_user_portal_multifactor",
-				Description: "",
+				Description: "If true, MFA is enabled while logging in to the user portal.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
 				Name:        "external_dn",
-				Description: "",
+				Description: "The external DN provided for the user.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "external_source_type",
-				Description: "",
+				Description: "Specifies the external source type of the user.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -165,12 +165,12 @@ func tableJumpcloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "password_never_expires",
-				Description: "",
+				Description: "If true, the password never gets expired.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
 				Name:        "passwordless_sudo",
-				Description: "",
+				Description: "If true, password is not required while using sudo.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
