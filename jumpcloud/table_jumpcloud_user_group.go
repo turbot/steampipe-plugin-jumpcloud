@@ -2,6 +2,8 @@ package jumpcloud
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	v2 "github.com/Subhajit97/jcapi-go/v2"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
@@ -17,6 +19,9 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 		Description: "JumpCloud User Group",
 		List: &plugin.ListConfig{
 			Hydrate: listJumpCloudUserGroups,
+			KeyColumns: plugin.KeyColumnSlice{
+				{Name: "name", Require: plugin.Optional},
+			},
 		},
 		Get: &plugin.GetConfig{
 			Hydrate:    getJumpCloudUserGroup,
@@ -43,6 +48,7 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 				Name:        "samba_enabled",
 				Description: "",
 				Type:        proto.ColumnType_BOOL,
+				Hydrate:     getJumpCloudUserGroup,
 				Transform:   transform.FromField("Attributes.SambaEnabled"),
 			},
 			{
@@ -56,6 +62,7 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 				Name:        "posix_groups",
 				Description: "A list of POSIX groups.",
 				Type:        proto.ColumnType_JSON,
+				Hydrate:     getJumpCloudUserGroup,
 				Transform:   transform.FromField("Attributes.PosixGroups"),
 			},
 
@@ -92,6 +99,13 @@ func listJumpCloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin
 			l := int32(*limit)
 			localVarOptionals["limit"] = l
 		}
+	}
+
+	// Filter results based on the quals
+	// https://docs.jumpcloud.com/api/2.0/index.html#tag/Groups/operation/groups_list
+	if d.EqualsQuals["name"] != nil {
+		filterStr := fmt.Sprintf("name:eq:%s", strings.ReplaceAll(d.EqualsQualString("name"), " ", "+"))
+		localVarOptionals["filter"] = filterStr
 	}
 
 	// Count the number of resource returned by the API.
@@ -133,14 +147,20 @@ func listJumpCloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin
 
 //// HYDRATE FUNCTIONS
 
-func getJumpCloudUserGroup(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func getJumpCloudUserGroup(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("jumpcloud_user_group.getJumpCloudUserGroup", "connection_error", err)
 		return nil, err
 	}
-	userGroupID := d.EqualsQualString("id")
+
+	var userGroupID string
+	if h.Item != nil {
+		userGroupID = h.Item.(v2.UserGroup).Id
+	} else {
+		userGroupID = d.EqualsQualString("id")
+	}
 
 	// Required quals cannot be empty
 	if userGroupID == "" {
