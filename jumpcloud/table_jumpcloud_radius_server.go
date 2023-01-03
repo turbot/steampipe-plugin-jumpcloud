@@ -36,7 +36,7 @@ func tableJumpCloudRadiusServer(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "network_source_ip",
-				Description: "The  IP address from which your organization's traffic will originate",
+				Description: "The IP address from which your organization's traffic will originate.",
 				Type:        proto.ColumnType_IPADDR,
 			},
 			{

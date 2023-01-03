@@ -52,7 +52,7 @@ func tableJumpCloudOrganization(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "has_stripe_customer_id",
-				Description: "True, if a Stripe customer ID has been provided..",
+				Description: "True, if a Stripe customer ID has been provided.",
 				Type:        proto.ColumnType_BOOL,
 				Hydrate:     getJumpCloudOrganization,
 			},

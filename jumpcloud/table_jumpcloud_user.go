@@ -24,7 +24,7 @@ func tableJumpCloudUser(_ context.Context) *plugin.Table {
 		Columns: []*plugin.Column{
 			{
 				Name:        "display_name",
-				Description: "Specifies the user’s preferred full name.",
+				Description: "Specifies the user's preferred full name.",
 				Type:        proto.ColumnType_STRING,
 				Transform:   transform.FromField("Displayname"),
 			},
