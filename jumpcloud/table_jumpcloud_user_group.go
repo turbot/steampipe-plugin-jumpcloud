@@ -2,8 +2,6 @@ package jumpcloud
 
 import (
 	"context"
-	"fmt"
-	"strings"
 
 	v2 "github.com/Subhajit97/jcapi-go/v2"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
@@ -19,9 +17,6 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 		Description: "JumpCloud User Group",
 		List: &plugin.ListConfig{
 			Hydrate: listJumpCloudUserGroups,
-			KeyColumns: plugin.KeyColumnSlice{
-				{Name: "name", Require: plugin.Optional},
-			},
 		},
 		Get: &plugin.GetConfig{
 			Hydrate:    getJumpCloudUserGroup,
@@ -99,13 +94,6 @@ func listJumpCloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin
 			l := int32(*limit)
 			localVarOptionals["limit"] = l
 		}
-	}
-
-	// Filter results based on the quals
-	// https://docs.jumpcloud.com/api/2.0/index.html#tag/Groups/operation/groups_list
-	if d.EqualsQuals["name"] != nil {
-		filterStr := fmt.Sprintf("name:eq:%s", strings.ReplaceAll(d.EqualsQualString("name"), " ", "+"))
-		localVarOptionals["filter"] = filterStr
 	}
 
 	// Count the number of resource returned by the API.
