@@ -183,7 +183,7 @@ func tableJumpCloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "totp_enabled",
-				Description: "If tru, TOTP is enabled for the user.",
+				Description: "If true, TOTP is enabled for the user.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{

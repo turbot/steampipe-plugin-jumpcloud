@@ -14,7 +14,6 @@ var ConfigSchema = map[string]*schema.Attribute{
 	"api_key": {
 		Type: schema.TypeString,
 	},
-
 	"org_id": {
 		Type: schema.TypeString,
 	},
