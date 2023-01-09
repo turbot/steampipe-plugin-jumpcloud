@@ -75,6 +75,13 @@ func tableJumpCloudApplication(_ context.Context) *plugin.Table {
 				Hydrate:     getJumpCloudApplicationGroupAssociation,
 				Transform:   transform.FromValue(),
 			},
+			{
+				Name:        "organization_id",
+				Description: "Specifies the ID of the organization.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getOrganization,
+				Transform:   transform.FromValue(),
+			},
 
 			// Steampipe standard columns
 			{

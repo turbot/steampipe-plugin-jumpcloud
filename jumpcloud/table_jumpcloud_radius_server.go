@@ -83,6 +83,13 @@ func tableJumpCloudRadiusServer(_ context.Context) *plugin.Table {
 				Description: "A list of tags attached with the server.",
 				Type:        proto.ColumnType_JSON,
 			},
+			{
+				Name:        "organization_id",
+				Description: "Specifies the ID of the organization.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getOrganization,
+				Transform:   transform.FromValue(),
+			},
 
 			// Steampipe standard columns
 			{

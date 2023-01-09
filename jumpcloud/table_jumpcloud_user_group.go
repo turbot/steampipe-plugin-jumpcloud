@@ -60,6 +60,13 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 				Hydrate:     getJumpCloudUserGroup,
 				Transform:   transform.FromField("Attributes.PosixGroups"),
 			},
+			{
+				Name:        "organization_id",
+				Description: "Specifies the ID of the organization.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getOrganization,
+				Transform:   transform.FromValue(),
+			},
 
 			// Steampipe standard columns
 			{
