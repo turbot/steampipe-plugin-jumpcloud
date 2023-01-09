@@ -23,11 +23,11 @@ func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, 
 
 	// No creds
 	if jumpCloudConfig.APIKey == nil {
-		return nil, fmt.Errorf("api_key must be passed in the config")
+		return nil, fmt.Errorf("api_key must be configured")
 	}
 
 	if jumpCloudConfig.OrgID == nil {
-		return nil, fmt.Errorf("org_id must be passed in the config")
+		return nil, fmt.Errorf("org_id must be configured")
 	}
 
 	config := jcapiv2.NewConfiguration()
@@ -57,11 +57,11 @@ func getV1Client(ctx context.Context, d *plugin.QueryData) (*jcapiv1.APIClient, 
 
 	// No creds
 	if jumpCloudConfig.APIKey == nil {
-		return nil, fmt.Errorf("api_key must be passed in the config")
+		return nil, fmt.Errorf("api_key must be configured")
 	}
 
 	if jumpCloudConfig.OrgID == nil {
-		return nil, fmt.Errorf("org_id must be passed in the config")
+		return nil, fmt.Errorf("org_id must be configured")
 	}
 
 	config := jcapiv1.NewConfiguration()
@@ -104,7 +104,7 @@ func getOrganizationAPIClient(ctx context.Context, d *plugin.QueryData) (*jcapiv
 
 	// No creds
 	if jumpCloudConfig.APIKey == nil {
-		return nil, fmt.Errorf("api_key must be passed in the config")
+		return nil, fmt.Errorf("api_key must be configured")
 	}
 
 	config := jcapiv1.NewConfiguration()

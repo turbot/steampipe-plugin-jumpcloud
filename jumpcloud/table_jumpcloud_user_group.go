@@ -30,7 +30,7 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "id",
-				Description: "An uniquely identifier for the user group.",
+				Description: "A uniquely identifier for the user group.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -96,7 +96,7 @@ func listJumpCloudUserGroups(ctx context.Context, d *plugin.QueryData, _ *plugin
 		}
 	}
 
-	// Count the number of resource returned by the API.
+	// Count the number of resources returned by the API.
 	// Set the value to 0.
 	resourceCount := 0
 
@@ -191,7 +191,7 @@ func getJumpCloudUserGroupMemberships(ctx context.Context, d *plugin.QueryData, 
 
 	localVarOptionals := map[string]interface{}{}
 
-	// Count the number of resource returned by the API.
+	// Count the number of resources returned by the API.
 	// Set the value to 0.
 	resourceCount := 0
 

@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/Subhajit97/jcapi-go v0.0.0-20221222135801-0cec3b2bf544
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.0.1
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.0.2
 )
 
 require (

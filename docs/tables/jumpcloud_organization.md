@@ -1,6 +1,6 @@
 # Table: jumpcloud_organization
 
-List all the JumpCloud organizations along with the settings and billing information.
+JumpCloud organization table lists all the organizations along with the settings and billing information.
 
 ## Examples
 
@@ -36,7 +36,8 @@ where
 select
   display_name,
   id,
-  settings -> 'passwordPolicy' ->> 'minLength' as password_min_length
+  settings -> 'passwordPolicy' ->> 'minLength' as password_min_length,
+  (settings -> 'passwordPolicy' ->> 'minLength')::int >= 14 as password_min_length_14_or_greater
 from
   jumpcloud_organization;
 ```
@@ -47,7 +48,8 @@ from
 select
   display_name,
   id,
-  settings -> 'passwordPolicy' -> 'passwordExpirationInDays' as password_min_length
+  settings -> 'passwordPolicy' ->> 'passwordExpirationInDays' as password_expiration,
+  (settings -> 'passwordPolicy' ->> 'passwordExpirationInDays')::int <= 90 as password_expiration_within_90
 from
   jumpcloud_organization;
 ```

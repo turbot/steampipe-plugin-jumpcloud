@@ -30,7 +30,7 @@ func tableJumpCloudApplication(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "id",
-				Description: "An uniquely identifier for the application.",
+				Description: "A uniquely identifier for the application.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -70,7 +70,7 @@ func tableJumpCloudApplication(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "user_groups",
-				Description: "Specifies the application configuration.",
+				Description: "User groups associated with the application.",
 				Type:        proto.ColumnType_JSON,
 				Hydrate:     getJumpCloudApplicationGroupAssociation,
 				Transform:   transform.FromValue(),
@@ -111,7 +111,7 @@ func listJumpCloudApplications(ctx context.Context, d *plugin.QueryData, _ *plug
 		}
 	}
 
-	// Count the number of resource returned by the API.
+	// Count the number of resources returned by the API.
 	// Set the value to 0.
 	resourceCount := 0
 

@@ -1,6 +1,6 @@
 # Table: jumpcloud_user_group
 
-An user group is a collection of users to perform group-based assignments to resources. User Groups provide your users access to resources.
+A user group is a collection of users to perform group-based assignments to resources. User Groups provide your users access to resources.
 
 ## Examples
 

@@ -41,12 +41,12 @@ func tableJumpCloudOrganization(_ context.Context) *plugin.Table {
 			{
 				Name:        "created",
 				Description: "The date and time when the organization was created.",
-				Type:        proto.ColumnType_STRING,
+				Type:        proto.ColumnType_TIMESTAMP,
 				Hydrate:     getJumpCloudOrganization,
 			},
 			{
 				Name:        "has_credit_card",
-				Description: "True, if credit card details has been provided for billing.",
+				Description: "True, if credit card details have been provided for billing.",
 				Type:        proto.ColumnType_BOOL,
 				Hydrate:     getJumpCloudOrganization,
 			},
@@ -120,7 +120,7 @@ func listJumpCloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plu
 		}
 	}
 
-	// Count the number of resource returned by the API.
+	// Count the number of resources returned by the API.
 	// Set the value to 0.
 	resourceCount := 0
 

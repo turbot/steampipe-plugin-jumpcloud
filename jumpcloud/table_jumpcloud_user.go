@@ -30,7 +30,7 @@ func tableJumpCloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "id",
-				Description: "An unique identifier for the user.",
+				Description: "A unique identifier for the user.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -163,7 +163,7 @@ func tableJumpCloudUser(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "password_expired",
-				Description: "True if the password was expired.",
+				Description: "True, if the password has expired.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{
@@ -242,7 +242,7 @@ func listJumpCloudUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 		}
 	}
 
-	// Count the number of resource returned by the API.
+	// Count the number of resources returned by the API.
 	// Set the value to 0.
 	resourceCount := 0
 

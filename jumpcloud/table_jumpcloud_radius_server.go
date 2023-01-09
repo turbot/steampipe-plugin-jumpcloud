@@ -51,12 +51,12 @@ func tableJumpCloudRadiusServer(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "user_lockout_action",
-				Description: "Specifies the action to be performed when the user gets lockout.",
+				Description: "Specifies the action to be performed when the user gets locked out.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
 				Name:        "user_password_expiration_action",
-				Description: "Specifies the action to be performed when the user's password got expires.",
+				Description: "Specifies the action to be performed when the user's password gets expired.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -119,7 +119,7 @@ func listJumpCloudRadiusServers(ctx context.Context, d *plugin.QueryData, _ *plu
 		}
 	}
 
-	// Count the number of resource returned by the API.
+	// Count the number of resources returned by the API.
 	// Set the value to 0.
 	resourceCount := 0
 
@@ -189,14 +189,8 @@ func getJumpCloudRadiusServerUserAssociations(ctx context.Context, d *plugin.Que
 		return nil, err
 	}
 
-	var serverID string
-	if h.Item != nil {
-		serverID = h.Item.(v1.Radiusserver).Id
-	} else {
-		serverID = d.EqualsQualString("id")
-	}
-
 	// Required quals cannot be empty
+	serverID := h.Item.(v1.Radiusserver).Id
 	if serverID == "" {
 		return nil, nil
 	}
