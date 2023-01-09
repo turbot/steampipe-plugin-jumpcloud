@@ -142,8 +142,8 @@ func listJumpCloudRadiusServers(ctx context.Context, d *plugin.QueryData, _ *plu
 			}
 		}
 
-		// Return if no data
-		if len(servers.Results) == 0 {
+		// Return if all data are processed
+		if resourceCount >= int(servers.TotalCount) {
 			break
 		}
 

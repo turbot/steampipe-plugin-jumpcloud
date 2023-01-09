@@ -143,8 +143,8 @@ func listJumpCloudOrganizations(ctx context.Context, d *plugin.QueryData, _ *plu
 			}
 		}
 
-		// Return if no data
-		if len(orgs.Results) == 0 {
+		// Return if all data are processed
+		if resourceCount >= int(orgs.TotalCount) {
 			break
 		}
 

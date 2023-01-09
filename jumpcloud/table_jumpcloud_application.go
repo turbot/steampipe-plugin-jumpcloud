@@ -134,8 +134,8 @@ func listJumpCloudApplications(ctx context.Context, d *plugin.QueryData, _ *plug
 			}
 		}
 
-		// Return if no data
-		if len(applicationList.Results) == 0 {
+		// Return if all data are processed
+		if resourceCount >= int(applicationList.TotalCount) {
 			break
 		}
 

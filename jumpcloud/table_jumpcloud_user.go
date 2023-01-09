@@ -265,8 +265,8 @@ func listJumpCloudUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 			}
 		}
 
-		// Return if no data
-		if len(users.Results) == 0 {
+		// Return if all data are processed
+		if resourceCount >= int(users.TotalCount) {
 			break
 		}
 
