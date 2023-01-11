@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["saas"]
 icon_url: "/images/plugins/turbot/jumpcloud.svg"
-brand_color: "#99CCCC"
+brand_color: "#14A19C"
 display_name: "JumpCloud"
 short_name: "jumpcloud"
 description: "Steampipe plugin to query servers, applications, user groups, and more from your JumpCloud organization."
