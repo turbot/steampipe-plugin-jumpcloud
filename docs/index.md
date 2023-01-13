@@ -20,23 +20,20 @@ List users with MFA disabled in your JumpCloud organization:
 
 ```sql
 select
-  display_name,
   username,
+  created,
   email,
-  created
+  mfa
 from
-  jumpcloud_user
-where
-  mfa is null
-  or not (mfa -> 'configured')::boolean;
+  jumpcloud_user;
 ```
 
 ```
 +--------------+------------+-----------------+---------------------------+
-| display_name | username   | email           | created                   |
+| username   | username   | email           | created                   |
 +--------------+------------+-----------------+---------------------------+
-| John         | johnweb    | john@domain.com | 2022-12-16T15:42:32+05:30 |
-| Adam         | cookiesowl | adam@domain.com | 2022-12-16T21:32:45+05:30 |
+| johnweb      | johnweb    | john@domain.com | 2022-12-16T15:42:32+05:30 |
+| cookiesowl         | cookiesowl | adam@domain.com | 2022-12-16T21:32:45+05:30 |
 +--------------+------------+-----------------+---------------------------+
 ```
 
