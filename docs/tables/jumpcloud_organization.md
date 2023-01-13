@@ -27,10 +27,11 @@ select
 from
   jumpcloud_organization
 where
-  not has_credit_card;
+  not has_credit_card
+  and not has_stripe_customer_id;
 ```
 
-### Check if password requires minimum length of 14 or greater
+### Check if password requires minimum length of 14
 
 ```sql
 select
@@ -42,7 +43,7 @@ from
   jumpcloud_organization;
 ```
 
-### Check if password expires within 90 days or less
+### Check if password expires within 90 days
 
 ```sql
 select

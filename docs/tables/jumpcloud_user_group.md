@@ -1,6 +1,6 @@
 # Table: jumpcloud_user_group
 
-A user group is a collection of users to perform group-based assignments to resources. User Groups provide your users access to resources.
+A user group is a collection of users to perform group-based assignments to resources. User groups provide users with access to resources.
 
 ## Examples
 
@@ -15,7 +15,7 @@ from
   jumpcloud_user_group;
 ```
 
-### List groups with Samba authentication enabled
+### List groups with samba authentication enabled
 
 ```sql
 select

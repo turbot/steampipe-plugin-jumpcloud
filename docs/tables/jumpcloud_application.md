@@ -16,7 +16,7 @@ from
   jumpcloud_application;
 ```
 
-### List of users who can can access the applications
+### List of users who can can access the application
 
 ```sql
 with application_group_association as (

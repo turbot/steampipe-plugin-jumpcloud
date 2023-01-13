@@ -17,7 +17,7 @@ from
   jumpcloud_user;
 ```
 
-### List all suspended users
+### List suspended users
 
 ```sql
 select
@@ -32,7 +32,7 @@ where
   suspended;
 ```
 
-### List all the users for whom MFA is not enabled
+### List users with MFA disabled
 
 ```sql
 select
