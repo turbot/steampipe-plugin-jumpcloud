@@ -30,7 +30,7 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "id",
-				Description: "A uniquely identifier for the user group.",
+				Description: "A unique identifier for the user group.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
@@ -41,7 +41,7 @@ func tableJumpCloudUserGroup(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "samba_enabled",
-				Description: "If true, Samba authentication is configured for the group.",
+				Description: "If true, samba authentication is configured for the group.",
 				Type:        proto.ColumnType_BOOL,
 				Hydrate:     getJumpCloudUserGroup,
 				Transform:   transform.FromField("Attributes.SambaEnabled"),
