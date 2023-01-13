@@ -30,7 +30,7 @@ func tableJumpCloudApplication(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "id",
-				Description: "A uniquely identifier for the application.",
+				Description: "A unique identifier for the application.",
 				Type:        proto.ColumnType_STRING,
 			},
 			{
