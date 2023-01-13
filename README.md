@@ -23,15 +23,12 @@ Run a query:
 
 ```sql
 select
-  display_name,
   username,
+  created,
   email,
-  created
+  mfa
 from
-  jumpcloud_user
-where
-  mfa is null
-  or not (mfa -> 'configured')::boolean;
+  jumpcloud_user;
 ```
 
 ## Developing
