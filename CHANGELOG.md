@@ -1,3 +1,14 @@
+## v0.1.0 [2023-02-04]
+
+_What's new?_
+
+- New tables added
+  - [jumpcloud_device](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device`) ([#6](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/6))
+
+_Dependencies_
+
+- Recompiled plugin with [steampipe-plugin-sdk v5.1.2](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v500-2022-11-16) with many cache improvements. ([#8](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/8))
+
 ## v0.0.1 [2023-01-13]
 
 _What's new?_
