@@ -3,7 +3,7 @@ module github.com/turbot/steampipe-plugin-jumpcloud
 go 1.19
 
 require (
-	github.com/Subhajit97/jcapi-go v0.0.0-20221222135801-0cec3b2bf544
+	github.com/Subhajit97/jcapi-go v0.0.0-20230203120654-e675cbd1fa2f
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.1.2
 )
 
