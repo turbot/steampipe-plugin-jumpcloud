@@ -44,7 +44,7 @@ func tableJumpCloudDevice(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "created",
-				Description: "The time when the device was enrolled.",
+				Description: "The time when the device was created.",
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
@@ -54,7 +54,7 @@ func tableJumpCloudDevice(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "last_contact",
-				Description: "The time when the device was scanned.",
+				Description: "The time when the device was last scanned.",
 				Type:        proto.ColumnType_TIMESTAMP,
 			},
 			{
@@ -127,7 +127,7 @@ func tableJumpCloudDevice(_ context.Context) *plugin.Table {
 			},
 			{
 				Name:        "ssh_root_enabled",
-				Description: "If true, device allowed to perform SSH on root.",
+				Description: "If true, device is allowed to perform SSH on root.",
 				Type:        proto.ColumnType_BOOL,
 			},
 			{

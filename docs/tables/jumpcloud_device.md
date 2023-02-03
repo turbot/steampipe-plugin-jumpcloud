@@ -49,7 +49,22 @@ where
   not active;
 ```
 
-### List devices with full disk encryption (FDE) disabled
+### List devices not allowing SSH password authentication
+
+```sql
+select
+  display_name,
+  serial_number,
+  os,
+  version,
+  created
+from
+  jumpcloud_device
+where
+  not allow_ssh_password_authentication;
+```
+
+### List devices with Full Disk Encryption (FDE) disabled
 
 ```sql
 select
@@ -65,7 +80,7 @@ where
   not (fde -> 'active')::boolean;
 ```
 
-### List all device users
+### List the user details of devices
 
 ```sql
 select
