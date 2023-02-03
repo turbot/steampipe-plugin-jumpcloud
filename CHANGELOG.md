@@ -3,7 +3,7 @@
 _What's new?_
 
 - New tables added
-  - [jumpcloud_device`](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device`) ([#6](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/6))
+  - [jumpcloud_device](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device`) ([#6](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/6))
 
 _Dependencies_
 
