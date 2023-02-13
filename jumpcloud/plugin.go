@@ -22,6 +22,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		TableMap: map[string]*plugin.Table{
 			"jumpcloud_application":   tableJumpCloudApplication(ctx),
 			"jumpcloud_device":        tableJumpCloudDevice(ctx),
+			"jumpcloud_linux_package": tableJumpCloudLinuxPackage(ctx),
 			"jumpcloud_organization":  tableJumpCloudOrganization(ctx),
 			"jumpcloud_radius_server": tableJumpCloudRadiusServer(ctx),
 			"jumpcloud_user":          tableJumpCloudUser(ctx),
