@@ -2,7 +2,7 @@
 
 The `jumpcloud_windows_program` table can be used to query information about all the programs installed in a Windows device.
 
-To query all applications installed in a MacOS device, use the `jumpcloud_macos_app` table instead.
+To query all applications installed in a MacOS or a Linux device, use the `jumpcloud_macos_app` and `jumpcloud_linux_package` tables respectively.
 
 ## Examples
 
@@ -62,7 +62,7 @@ from
   jumpcloud_windows_program as a
   join jumpcloud_device as d on d.id = a.device_id
 where
-  a.name like 'Tailscale%'
+  a.name ilike 'zoom%'
   and string_to_array(split_part(a.version, ' ', 1), '.')::int[] < string_to_array('5.12', '.')::int[];
 ```
 
