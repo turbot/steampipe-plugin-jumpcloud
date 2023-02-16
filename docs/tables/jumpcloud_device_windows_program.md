@@ -1,8 +1,8 @@
-# Table: jumpcloud_windows_program
+# Table: jumpcloud_device_windows_program
 
-The `jumpcloud_windows_program` table can be used to query information about all the programs installed in a Windows device.
+The `jumpcloud_device_windows_program` table can be used to query information about all the programs installed in a Windows device.
 
-To query all applications installed in a MacOS or a Linux device, use the `jumpcloud_macos_app` and `jumpcloud_linux_package` tables respectively.
+To query all applications installed in a MacOS or a Linux device, use the `jumpcloud_device_macos_app` and `jumpcloud_device_linux_package` tables respectively.
 
 ## Examples
 
@@ -16,7 +16,7 @@ select
   install_location,
   device_id
 from
-  jumpcloud_windows_program;
+  jumpcloud_device_windows_program;
 ```
 
 ### Get the device information
@@ -29,11 +29,11 @@ select
   a.version as program_version,
   a.install_date
 from
-  jumpcloud_windows_program as a
+  jumpcloud_device_windows_program as a
   join jumpcloud_device as d on d.id = a.device_id;
 ```
 
-### List devices with Tailscale app installed
+### List devices with tailscale app installed
 
 ```sql
 select
@@ -43,13 +43,13 @@ select
   a.version as program_version,
   a.install_date
 from
-  jumpcloud_windows_program as a
+  jumpcloud_device_windows_program as a
   join jumpcloud_device as d on d.id = a.device_id
 where
   a.name like 'Tailscale%';
 ```
 
-### List computers with an older version of Zoom app (< 5.12)
+### List computers with an older version of zoom app (< 5.12)
 
 ```sql
 select
@@ -59,7 +59,7 @@ select
   a.version as program_version,
   a.install_date
 from
-  jumpcloud_windows_program as a
+  jumpcloud_device_windows_program as a
   join jumpcloud_device as d on d.id = a.device_id
 where
   a.name ilike 'zoom%'
@@ -75,7 +75,7 @@ select
   install_date,
   device_id
 from
-  jumpcloud_windows_program
+  jumpcloud_device_windows_program
 where
   install_date >= (current_timestamp - interval '1 day')
 order by

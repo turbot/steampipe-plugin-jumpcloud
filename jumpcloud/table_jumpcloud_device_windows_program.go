@@ -13,13 +13,13 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpCloudWindowsProgram(_ context.Context) *plugin.Table {
+func tableJumpCloudDeviceWindowsProgram(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "jumpcloud_windows_program",
+		Name:        "jumpcloud_device_windows_program",
 		Description: "JumpCloud Windows Device Program",
 		List: &plugin.ListConfig{
 			ParentHydrate: listJumpCloudDevices,
-			Hydrate:       listJumpCloudWindowsPrograms,
+			Hydrate:       listJumpCloudDeviceWindowsPrograms,
 			KeyColumns: plugin.KeyColumnSlice{
 				{Name: "device_id", Require: plugin.Optional},
 			},
@@ -90,8 +90,13 @@ func tableJumpCloudWindowsProgram(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpCloudWindowsPrograms(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudDeviceWindowsPrograms(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	device := h.Item.(v1.System)
+
+	// Return nil, if the device_id quals is passed with an empty value.
+	if d.EqualsQuals["device_id"] != nil && d.EqualsQualString("device_id") == "" {
+		return nil, nil
+	}
 
 	// This table lists programs of all the windows devices available in the JumpCloud.
 	// Restrict the table by passing a device ID to list programs for a specific windows device.
@@ -102,7 +107,7 @@ func listJumpCloudWindowsPrograms(ctx context.Context, d *plugin.QueryData, h *p
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_windows_program.listJumpCloudWindowsPrograms", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_device_windows_program.listJumpCloudDeviceWindowsPrograms", "connection_error", err)
 		return nil, err
 	}
 
@@ -131,7 +136,7 @@ func listJumpCloudWindowsPrograms(ctx context.Context, d *plugin.QueryData, h *p
 	for {
 		programs, _, err := client.SystemInsightsApi.SysteminsightsListPrograms(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_windows_program.listJumpCloudWindowsPrograms", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_device_windows_program.listJumpCloudDeviceWindowsPrograms", "query_error", err)
 			return nil, err
 		}
 
