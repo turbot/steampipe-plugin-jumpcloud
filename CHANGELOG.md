@@ -3,9 +3,9 @@
 _What's new?_
 
 - New tables added
-  - [jumpcloud_device_linux_package](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device_linux_package`) ([#15](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/15))
-  - [jumpcloud_device_macos_app](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device_macos_app`) ([#13](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/13))
-  - [jumpcloud_device_windows_program](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device_windows_program`) ([#14](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/14))
+  - [jumpcloud_device_linux_package](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device_linux_package) ([#15](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/15))
+  - [jumpcloud_device_macos_app](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device_macos_app) ([#13](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/13))
+  - [jumpcloud_device_windows_program](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables/jumpcloud_device_windows_program) ([#14](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/14))
 
 _Enhancements_
 
