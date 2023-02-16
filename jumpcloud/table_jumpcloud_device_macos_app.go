@@ -151,11 +151,17 @@ func tableJumpCloudDeviceMacOSApp(_ context.Context) *plugin.Table {
 //// LIST FUNCTION
 
 func listJumpCloudDeviceMacOSApps(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	// Get the id of the parent device.
 	device := h.Item.(v1.System)
+	deviceID := device.Id
 
-	// This table lists applications of all the devices available in the JumpCloud.
-	// Restrict the table by passing a device ID to list applications for a specific device.
-	if d.EqualsQualString("device_id") != "" && device.Id != d.EqualsQualString("device_id") {
+	// If device ID is passed in as quals, then use it in the API filter.
+	if d.EqualsQuals["device_id"] != nil {
+		deviceID = d.EqualsQualString("device_id")
+	}
+
+	// Return nil, if empty
+	if deviceID == "" {
 		return nil, nil
 	}
 
@@ -181,7 +187,7 @@ func listJumpCloudDeviceMacOSApps(ctx context.Context, d *plugin.QueryData, h *p
 	}
 
 	// Get the required field
-	filters := []string{fmt.Sprintf("system_id:eq:%s", device.Id)}
+	filters := []string{fmt.Sprintf("system_id:eq:%s", deviceID)}
 	localVarOptionals["filter"] = filters
 
 	// Count the number of resources returned by the API.
