@@ -13,13 +13,13 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpCloudLinuxPackage(_ context.Context) *plugin.Table {
+func tableJumpCloudDeviceLinuxPackage(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "jumpcloud_linux_package",
+		Name:        "jumpcloud_device_linux_package",
 		Description: "JumpCloud Linux Device Package",
 		List: &plugin.ListConfig{
 			ParentHydrate: listJumpCloudDevices,
-			Hydrate:       listJumpCloudLinuxPackages,
+			Hydrate:       listJumpCloudDeviceLinuxPackages,
 			KeyColumns: plugin.KeyColumnSlice{
 				{Name: "device_id", Require: plugin.Optional},
 			},
@@ -106,8 +106,13 @@ func tableJumpCloudLinuxPackage(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpCloudLinuxPackages(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudDeviceLinuxPackages(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	device := h.Item.(v1.System)
+
+	// Return nil, if the device_id quals is passed with an empty value.
+	if d.EqualsQuals["device_id"] != nil && d.EqualsQualString("device_id") == "" {
+		return nil, nil
+	}
 
 	// This table lists packages of all the linux devices available in the JumpCloud.
 	// Restrict the table by passing a device ID to list programs for a specific linux device.
@@ -118,7 +123,7 @@ func listJumpCloudLinuxPackages(ctx context.Context, d *plugin.QueryData, h *plu
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_linux_package.listJumpCloudLinuxPackages", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_device_linux_package.listJumpCloudDeviceLinuxPackages", "connection_error", err)
 		return nil, err
 	}
 
@@ -147,7 +152,7 @@ func listJumpCloudLinuxPackages(ctx context.Context, d *plugin.QueryData, h *plu
 	for {
 		packages, _, err := client.SystemInsightsApi.SysteminsightsListLinuxPackages(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_linux_package.listJumpCloudLinuxPackages", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_device_linux_package.listJumpCloudDeviceLinuxPackages", "query_error", err)
 			return nil, err
 		}
 

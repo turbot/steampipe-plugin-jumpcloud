@@ -1,8 +1,8 @@
-# Table: jumpcloud_linux_package
+# Table: jumpcloud_device_linux_package
 
-The `jumpcloud_linux_package` table can be used to query information about all the packages installed on a Linux device.
+The `jumpcloud_device_linux_package` table can be used to query information about all the packages installed on a Linux device.
 
-To query all applications installed in a MacOS or a Windows device, use the `jumpcloud_macos_app` and `jumpcloud_windows_program` tables respectively.
+To query all applications installed in a MacOS or a Windows device, use the `jumpcloud_device_macos_app` and `jumpcloud_device_windows_program` tables respectively.
 
 ## Examples
 
@@ -16,7 +16,7 @@ select
   size,
   device_id
 from
-  jumpcloud_linux_package;
+  jumpcloud_device_linux_package;
 ```
 
 ### Get the device information
@@ -29,7 +29,7 @@ select
   a.version as package_version,
   a.install_time
 from
-  jumpcloud_linux_package as a
+  jumpcloud_device_linux_package as a
   join jumpcloud_device as d on d.id = a.device_id;
 ```
 
@@ -43,7 +43,7 @@ select
   a.version as package_version,
   a.install_time
 from
-  jumpcloud_linux_package as a
+  jumpcloud_device_linux_package as a
   join jumpcloud_device as d on d.id = a.device_id
 where
   a.name ilike 'tailscale%';
@@ -59,7 +59,7 @@ select
   a.version as package_version,
   a.install_time
 from
-  jumpcloud_linux_package as a
+  jumpcloud_device_linux_package as a
   join jumpcloud_device as d on d.id = a.device_id
 where
   a.name ilike 'zoom%'
@@ -75,7 +75,7 @@ select
   install_time,
   device_id
 from
-  jumpcloud_linux_package
+  jumpcloud_device_linux_package
 where
   install_time >= (current_timestamp - interval '1 day')
 order by

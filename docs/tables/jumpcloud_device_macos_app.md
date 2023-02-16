@@ -2,6 +2,8 @@
 
 The `jumpcloud_device_macos_app` table can be used to query information about all the applications installed in a MacOS device.
 
+To query all applications installed in a Windows or a Linux device, use the `jumpcloud_device_windows_program` and `jumpcloud_device_linux_package` tables respectively.
+
 ## Examples
 
 ### Basic info

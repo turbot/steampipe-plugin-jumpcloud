@@ -154,7 +154,7 @@ func listJumpCloudDeviceMacOSApps(ctx context.Context, d *plugin.QueryData, h *p
 	device := h.Item.(v1.System)
 
 	// Return nil, if the device_id quals is passed with an empty value.
-	if d.EqualsQualString("device_id") == "" {
+	if d.EqualsQuals["device_id"] != nil && d.EqualsQualString("device_id") == "" {
 		return nil, nil
 	}
 
