@@ -33,7 +33,7 @@ from
   join jumpcloud_device as d on d.id = a.device_id;
 ```
 
-### List devices with Tailscale app installed
+### List devices with tailscale app installed
 
 ```sql
 select
@@ -49,7 +49,7 @@ where
   a.name ilike 'tailscale%';
 ```
 
-### List computers with an older version of Zoom app (< 5.12)
+### List computers with an older version of zoom app (< 5.12)
 
 ```sql
 select
@@ -66,7 +66,7 @@ where
   and string_to_array(split_part(a.version, ' ', 1), '.')::int[] < string_to_array('5.12', '.')::int[];
 ```
 
-### List all programs installed in last 24 hours
+### List all packages installed in last 24 hours
 
 ```sql
 select
