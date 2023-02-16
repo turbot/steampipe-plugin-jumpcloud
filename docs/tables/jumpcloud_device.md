@@ -49,6 +49,21 @@ where
   not active;
 ```
 
+### Get hardware related info
+
+```sql
+select
+  display_name,
+  serial_number,
+  device_info ->> 'cpu_type' as cpu_type,
+  device_info ->> 'cpu_logical_cores' as cpu_logical_cores,
+  device_info ->> 'cpu_physical_cores' as cpu_physical_cores,
+  device_info ->> 'hardware_model' as hardware_model,
+  device_info ->> 'hardware_version' as hardware_version
+from
+  jumpcloud_device;
+```
+
 ### List devices not allowing SSH password authentication
 
 ```sql
