@@ -162,7 +162,7 @@ func listJumpCloudDeviceMacOSApps(ctx context.Context, d *plugin.QueryData, h *p
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_device_macos_app.listJumpCloudMacOSApps", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_device_macos_app.listJumpCloudDeviceMacOSApps", "connection_error", err)
 		return nil, err
 	}
 
@@ -191,7 +191,7 @@ func listJumpCloudDeviceMacOSApps(ctx context.Context, d *plugin.QueryData, h *p
 	for {
 		apps, _, err := client.SystemInsightsApi.SysteminsightsListApps(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_device_macos_app.listJumpCloudMacOSApps", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_device_macos_app.listJumpCloudDeviceMacOSApps", "query_error", err)
 			return nil, err
 		}
 
