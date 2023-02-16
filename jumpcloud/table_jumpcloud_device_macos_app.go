@@ -15,13 +15,13 @@ import (
 
 //// TABLE DEFINITION
 
-func tableJumpCloudMacOSApp(_ context.Context) *plugin.Table {
+func tableJumpCloudDeviceMacOSApp(_ context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "jumpcloud_macos_app",
+		Name:        "jumpcloud_device_macos_app",
 		Description: "JumpCloud MacOS Device App",
 		List: &plugin.ListConfig{
 			ParentHydrate: listJumpCloudDevices,
-			Hydrate:       listJumpCloudMacOSApps,
+			Hydrate:       listJumpCloudDeviceMacOSApps,
 			KeyColumns: plugin.KeyColumnSlice{
 				{Name: "device_id", Require: plugin.Optional},
 			},
@@ -150,7 +150,7 @@ func tableJumpCloudMacOSApp(_ context.Context) *plugin.Table {
 
 //// LIST FUNCTION
 
-func listJumpCloudMacOSApps(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+func listJumpCloudDeviceMacOSApps(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	device := h.Item.(v1.System)
 
 	// This table lists applications of all the devices available in the JumpCloud.
@@ -162,7 +162,7 @@ func listJumpCloudMacOSApps(ctx context.Context, d *plugin.QueryData, h *plugin.
 	// Create client
 	client, err := getV2Client(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("jumpcloud_macos_app.listJumpCloudMacOSApps", "connection_error", err)
+		plugin.Logger(ctx).Error("jumpcloud_device_macos_app.listJumpCloudMacOSApps", "connection_error", err)
 		return nil, err
 	}
 
@@ -191,7 +191,7 @@ func listJumpCloudMacOSApps(ctx context.Context, d *plugin.QueryData, h *plugin.
 	for {
 		apps, _, err := client.SystemInsightsApi.SysteminsightsListApps(ctx, "application/json", "application/json", localVarOptionals)
 		if err != nil {
-			plugin.Logger(ctx).Error("jumpcloud_macos_app.listJumpCloudMacOSApps", "query_error", err)
+			plugin.Logger(ctx).Error("jumpcloud_device_macos_app.listJumpCloudMacOSApps", "query_error", err)
 			return nil, err
 		}
 
