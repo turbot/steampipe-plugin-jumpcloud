@@ -1,6 +1,6 @@
-# Table: jumpcloud_macos_app
+# Table: jumpcloud_device_macos_app
 
-The `jumpcloud_macos_app` table can be used to query information about all the applications installed in a MacOS device.
+The `jumpcloud_device_macos_app` table can be used to query information about all the applications installed in a MacOS device.
 
 ## Examples
 
@@ -14,7 +14,7 @@ select
   path,
   device_id
 from
-  jumpcloud_macos_app;
+  jumpcloud_device_macos_app;
 ```
 
 ### Get the device information
@@ -27,11 +27,11 @@ select
   a.version as app_version,
   a.last_opened_time
 from
-  jumpcloud_macos_app as a
+  jumpcloud_device_macos_app as a
   join jumpcloud_device as d on d.id = a.device_id;
 ```
 
-### List devices with Tailscale app installed
+### List devices with tailscale app installed
 
 ```sql
 select
@@ -41,13 +41,13 @@ select
   a.version as app_version,
   a.last_opened_time
 from
-  jumpcloud_macos_app as a
+  jumpcloud_device_macos_app as a
   join jumpcloud_device as d on d.id = a.device_id
 where
   a.name = 'Tailscale.app';
 ```
 
-### List computers with an older version of Zoom app (< 5.12)
+### List computers with an older version of zoom app (< 5.12)
 
 ```sql
 select
@@ -57,7 +57,7 @@ select
   a.version as app_version,
   a.last_opened_time
 from
-  jumpcloud_macos_app as a
+  jumpcloud_device_macos_app as a
   join jumpcloud_device as d on d.id = a.device_id
 where
   a.name = 'zoom.us.app'
@@ -73,7 +73,7 @@ select
   last_opened_time,
   device_id
 from
-  jumpcloud_macos_app
+  jumpcloud_device_macos_app
 where
   last_opened_time >= (current_timestamp - interval '1 day')
 order by
