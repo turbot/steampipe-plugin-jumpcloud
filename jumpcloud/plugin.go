@@ -20,13 +20,14 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			Schema:      ConfigSchema,
 		},
 		TableMap: map[string]*plugin.Table{
-			"jumpcloud_application":      tableJumpCloudApplication(ctx),
-			"jumpcloud_device":           tableJumpCloudDevice(ctx),
-			"jumpcloud_device_macos_app": tableJumpCloudDeviceMacOSApp(ctx),
-			"jumpcloud_organization":     tableJumpCloudOrganization(ctx),
-			"jumpcloud_radius_server":    tableJumpCloudRadiusServer(ctx),
-			"jumpcloud_user":             tableJumpCloudUser(ctx),
-			"jumpcloud_user_group":       tableJumpCloudUserGroup(ctx),
+			"jumpcloud_application":          tableJumpCloudApplication(ctx),
+			"jumpcloud_device":               tableJumpCloudDevice(ctx),
+			"jumpcloud_device_linux_package": tableJumpCloudDeviceLinuxPackage(ctx),
+			"jumpcloud_device_macos_app":     tableJumpCloudDeviceMacOSApp(ctx),
+			"jumpcloud_organization":         tableJumpCloudOrganization(ctx),
+			"jumpcloud_radius_server":        tableJumpCloudRadiusServer(ctx),
+			"jumpcloud_user":                 tableJumpCloudUser(ctx),
+			"jumpcloud_user_group":           tableJumpCloudUserGroup(ctx),
 		},
 	}
 

@@ -42,8 +42,8 @@ github.com/PuerkitoBio/purell v1.0.0/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbt
 github.com/PuerkitoBio/purell v1.1.1/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbtSwDGJws/X0=
 github.com/PuerkitoBio/urlesc v0.0.0-20160726150825-5bd2802263f2/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
 github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
-github.com/Subhajit97/jcapi-go v0.0.0-20230203120654-e675cbd1fa2f h1:TuBJLU6avY5XiHtQIVSM8B9p1VpTjvjxf8lmrHpHYZc=
-github.com/Subhajit97/jcapi-go v0.0.0-20230203120654-e675cbd1fa2f/go.mod h1:5ibz+DTzXhs9qvUsl59cSpBxSTW/qehCzZJQ87c0Tw8=
+github.com/Subhajit97/jcapi-go v0.0.0-20230213115424-980aab397c07 h1:QhRJChqREdCi3ykJ0frrrc8wIherKEo0yHyR1hcieB0=
+github.com/Subhajit97/jcapi-go v0.0.0-20230213115424-980aab397c07/go.mod h1:5ibz+DTzXhs9qvUsl59cSpBxSTW/qehCzZJQ87c0Tw8=
 github.com/XiaoMi/pegasus-go-client v0.0.0-20210427083443-f3b6b08bc4c2 h1:pami0oPhVosjOu/qRHepRmdjD6hGILF7DBr+qQZeP10=
 github.com/XiaoMi/pegasus-go-client v0.0.0-20210427083443-f3b6b08bc4c2/go.mod h1:jNIx5ykW1MroBuaTja9+VpglmaJOUzezumfhLlER3oY=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d h1:licZJFw2RwpHMqeKTCYkitsPqHNxTmd4SNR5r94FGM8=
