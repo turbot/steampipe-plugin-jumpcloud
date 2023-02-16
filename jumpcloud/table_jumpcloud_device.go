@@ -2,7 +2,9 @@ package jumpcloud
 
 import (
 	"context"
+	"fmt"
 
+	v1 "github.com/Subhajit97/jcapi-go/v1"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -158,6 +160,13 @@ func tableJumpCloudDevice(_ context.Context) *plugin.Table {
 				Type:        proto.ColumnType_JSON,
 			},
 			{
+				Name:        "device_info",
+				Description: "Specifies the device information.",
+				Type:        proto.ColumnType_JSON,
+				Hydrate:     getJumpCloudDeviceInfo,
+				Transform:   transform.FromValue(),
+			},
+			{
 				Name:        "fde",
 				Description: "Indicates if the full disk encryption is active in the system.",
 				Type:        proto.ColumnType_JSON,
@@ -290,14 +299,14 @@ func getJumpCloudDevice(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 		plugin.Logger(ctx).Error("jumpcloud_device.getJumpCloudDevice", "connection_error", err)
 		return nil, err
 	}
-	userID := d.EqualsQualString("id")
+	deviceID := d.EqualsQualString("id")
 
 	// Required quals cannot be empty
-	if userID == "" {
+	if deviceID == "" {
 		return nil, nil
 	}
 
-	data, resp, err := client.SystemsApi.SystemsGet(ctx, userID, "application/json", "application/json", nil)
+	data, resp, err := client.SystemsApi.SystemsGet(ctx, deviceID, "application/json", "application/json", nil)
 	if err != nil {
 		plugin.Logger(ctx).Error("jumpcloud_device.getJumpCloudDevice", "query_error", err)
 
@@ -311,4 +320,46 @@ func getJumpCloudDevice(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydr
 	}
 
 	return data, nil
+}
+
+func getJumpCloudDeviceInfo(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	device := h.Item.(v1.System)
+
+	// Create client
+	client, err := getV2Client(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_device.getJumpCloudDeviceInfo", "connection_error", err)
+		return nil, err
+	}
+
+	localVarOptionals := map[string]interface{}{
+		// Filter the response to get information of the specified device.
+		"filter": []string{fmt.Sprintf("system_id:eq:%s", device.Id)},
+
+		// Since the API is called for a specific device,
+		// the first object will contain the queried data.
+		"limit": int32(1),
+	}
+
+	data, resp, err := client.SystemInsightsApi.SysteminsightsListSystemInfo(ctx, "application/json", "application/json", localVarOptionals)
+	if err != nil {
+		plugin.Logger(ctx).Error("jumpcloud_device.getJumpCloudDeviceInfo", "query_error", err)
+
+		// Ignore if resource not found error
+		if resp.StatusCode == 404 {
+			return nil, nil
+		}
+
+		// Else return the error
+		return nil, err
+	}
+
+	// The API returns a list of device information.
+	// But the response can be filtered by providing a specific device ID.
+	// Hence, the response only contains the information of the queried device.
+	if len(data) > 0 {
+		return data[0], nil
+	}
+
+	return nil, nil
 }
