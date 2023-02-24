@@ -1,3 +1,9 @@
+## v0.2.1 [2023-02-25]
+
+_Bug fixes_
+
+- Fixed the `install_date` column in `jumpcloud_device_windows_program` table to correctly convert the install date into UTC format to avoid returning errors on being queried. ([#21](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/21))
+
 ## v0.2.0 [2023-02-16]
 
 _What's new?_
