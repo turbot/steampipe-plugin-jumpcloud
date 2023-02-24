@@ -187,12 +187,12 @@ func formatInstallDate(ctx context.Context, d *transform.TransformData) (interfa
 	}
 
 	// As per the API documentation, install_date returns a date string.
-	// But the type of the date is not constant.
+	// But the format of the date is not consistent.
 	// It can be yyyymmdd, or, yyyy-mm-dd, or mm/dd/yyyy.
 	// By default the Steampipe SDK transforms the yyyymmdd and yyyy-mm-dd formats,
-	// but for 01/02/2006 format, it returns error.
+	// but for 01/02/2006 format, it returns an error.
 	// Below mentioned code snippet will parse the mm/dd/yyyy to a valid UTC format.
-	// Parse the time string in mm/dd/yyyy format
+	// Parse the date string in mm/dd/yyyy format
 	t, err := parseAndConvertToUTC(program.InstallDate)
 	if err != nil {
 		return nil, err
