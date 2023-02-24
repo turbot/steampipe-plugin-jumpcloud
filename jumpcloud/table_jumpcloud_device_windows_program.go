@@ -3,9 +3,11 @@ package jumpcloud
 import (
 	"context"
 	"fmt"
+	"time"
 
 	v1 "github.com/Subhajit97/jcapi-go/v1"
-
+	v2 "github.com/Subhajit97/jcapi-go/v2"
+	"github.com/turbot/go-kit/types"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
@@ -55,6 +57,7 @@ func tableJumpCloudDeviceWindowsProgram(_ context.Context) *plugin.Table {
 				Name:        "install_date",
 				Description: "The time when the program was installed.",
 				Type:        proto.ColumnType_TIMESTAMP,
+				Transform:   transform.From(formatInstallDate).Transform(transform.NullIfZeroValue),
 			},
 			{
 				Name:        "install_location",
@@ -164,4 +167,36 @@ func listJumpCloudDeviceWindowsPrograms(ctx context.Context, d *plugin.QueryData
 	}
 
 	return nil, nil
+}
+
+//// TRANSFORM FUNCTIONS
+
+func formatInstallDate(ctx context.Context, d *transform.TransformData) (interface{}, error) {
+	program := d.HydrateItem.(v2.SystemInsightsPrograms)
+
+	// Return nil, if the install_date is empty
+	if program.InstallDate == "" {
+		return nil, nil
+	}
+
+	// There are some cases where the API returns invalid date range, i.e. 20202130
+	// Return nil, if the date range is invalid
+	_, err := types.ToTime(program.InstallDate)
+	if err != nil {
+		return nil, nil
+	}
+
+	// As per the API documentation, install_date returns a date string.
+	// But the format of the date is not consistent.
+	// It can be yyyymmdd, or, yyyy-mm-dd, or mm/dd/yyyy.
+	// By default the Steampipe SDK transforms the yyyymmdd and yyyy-mm-dd formats,
+	// but for 01/02/2006 format, it returns an error.
+	// Below mentioned code snippet will parse the mm/dd/yyyy to a valid UTC format.
+	// Parse the date string in mm/dd/yyyy format
+	t, err := parseAndConvertToUTC(program.InstallDate)
+	if err != nil {
+		return nil, err
+	}
+
+	return t.Format(time.RFC3339), nil
 }
