@@ -2,6 +2,7 @@ package jumpcloud
 
 import (
 	"context"
+	"time"
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 )
@@ -24,4 +25,28 @@ func getOrganizationUncached(ctx context.Context, d *plugin.QueryData, _ *plugin
 	}
 
 	return nil, nil
+}
+
+// Parse the input time string in the specified format
+func parseAndConvertToUTC(inputTime string) (time.Time, error) {
+	var t time.Time
+	var err error
+
+	// Try to parse the input time string in different formats
+	formats := []string{"20060102", "2006-01-02", "01/02/2006", "1/02/2006", "01/2/2006", "1/2/2006"}
+	for _, format := range formats {
+		t, err = time.Parse(format, inputTime)
+		if err == nil {
+			break
+		}
+	}
+
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	// Convert the parsed time to UTC format
+	utcTime := t.UTC()
+
+	return utcTime, nil
 }
