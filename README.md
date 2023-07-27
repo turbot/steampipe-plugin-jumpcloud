@@ -6,7 +6,7 @@ Use SQL to query infrastructure servers, applications, user groups, and more fro
 
 - **[Get started →](https://hub.steampipe.io/plugins/turbot/jumpcloud)**
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/jumpcloud/tables)
-- Community: [Slack Channel](https://steampipe.io/community/join)
+- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
 - Get involved: [Issues](https://github.com/turbot/steampipe-plugin-jumpcloud/issues)
 
 ## Quick start
