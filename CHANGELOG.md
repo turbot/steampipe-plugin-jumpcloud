@@ -2,8 +2,8 @@
 
 _Dependencies_
 
-- Upgraded to [steampipe-plugin-sdk v5.6.1](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v561-2023-09-29) with support for rate limiters.
-- Recompiled plugin with Go version `1.21`.
+- Upgraded to [steampipe-plugin-sdk v5.6.1](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v561-2023-09-29) with support for rate limiters. ([#29](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/29))
+- Recompiled plugin with Go version `1.21`. ([#29](https://github.com/turbot/steampipe-plugin-jumpcloud/pull/29))
 
 ## v0.2.1 [2023-02-25]
 
