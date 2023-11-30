@@ -1,10 +1,20 @@
-# Table: jumpcloud_device
+---
+title: "Steampipe Table: jumpcloud_device - Query JumpCloud Devices using SQL"
+description: "Allows users to query Devices in JumpCloud, specifically device details such as hostname, operating system, and associated users, providing insights into device management and user access."
+---
 
-Mac, Windows, or Linux devices are bound to JumpCloud by installing JumpCloud's system agent. Once installed and bound, you can remotely and securely manage these devices and their user accounts, set policies, execute commands, enable MFA, and more.
+# Table: jumpcloud_device - Query JumpCloud Devices using SQL
+
+JumpCloud Devices are the individual computing assets within the JumpCloud platform. These devices can be any type of computing asset, such as servers, desktops, or laptops, and can run various operating systems, including Windows, Mac, and Linux. The JumpCloud platform allows for centralized device management, enabling administrators to track and control user access, apply security policies, and monitor device status.
+
+## Table Usage Guide
+
+The `jumpcloud_device` table provides insights into individual devices within the JumpCloud platform. As a system administrator, you can explore device-specific details through this table, including hostname, operating system, and associated user access. Utilize it to uncover information about devices, such as those with specific operating systems, the users associated with each device, and the overall status of each device.
 
 ## Examples
 
 ### Basic info
+Explore active devices within your network, identifying their operating system, version, and creation date. This query is useful for maintaining an up-to-date inventory and ensuring all devices are running the correct OS versions.
 
 ```sql
 select
@@ -19,6 +29,7 @@ from
 ```
 
 ### List devices with MFA disabled
+Explore which devices in your network have multi-factor authentication disabled. This is essential for identifying potential security risks and ensuring all devices comply with security policies.
 
 ```sql
 select
@@ -35,6 +46,7 @@ where
 ```
 
 ### List inactive devices
+Explore which devices are inactive in your system. This is useful for identifying unused resources and potentially improving system efficiency.
 
 ```sql
 select
@@ -50,6 +62,7 @@ where
 ```
 
 ### Get hardware related info
+Determine the areas in which hardware-related information is needed to gain insights into device specifications such as CPU type, number of logical and physical cores, hardware model, and version. This can be useful in managing resources, optimizing performance, and planning upgrades.
 
 ```sql
 select
@@ -65,6 +78,7 @@ from
 ```
 
 ### List devices not allowing SSH password authentication
+Explore which devices in your network are configured to disallow SSH password authentication. This is useful for enhancing security by identifying devices that rely on more secure authentication methods.
 
 ```sql
 select
@@ -80,6 +94,7 @@ where
 ```
 
 ### List devices with Full Disk Encryption (FDE) disabled
+Determine the areas in which devices do not have Full Disk Encryption (FDE) enabled. This can be useful in identifying potential security risks and ensuring that all devices comply with company encryption policies.
 
 ```sql
 select
@@ -96,6 +111,7 @@ where
 ```
 
 ### List the user details of devices
+Explore active devices by identifying the user details associated with each one. This can be useful for administrators to monitor device usage and track login activity.
 
 ```sql
 select

@@ -1,10 +1,20 @@
-# Table: jumpcloud_user
+---
+title: "Steampipe Table: jumpcloud_user - Query JumpCloud Users using SQL"
+description: "Allows users to query JumpCloud Users, providing details about each user's profile, status, and associated metadata."
+---
 
-User identities are at the core of JumpCloud. As a core directory, JumpCloud provides centralized, authoritative versions of each employee's identities so they can use a single set of credentials across all their resources.
+# Table: jumpcloud_user - Query JumpCloud Users using SQL
+
+JumpCloud is a cloud-based directory service that connects users to their workstations, applications, files, and networks. It is designed to control and manage user access to both internal and external IT resources such as WiFi and VPN networks, servers, and web applications. JumpCloud supports various platforms including Mac, Windows, and Linux, and offers features such as LDAP-as-a-Service, RADIUS-as-a-Service, device management, and single sign-on.
+
+## Table Usage Guide
+
+The `jumpcloud_user` table provides insights into user profiles within JumpCloud. As a system administrator, explore user-specific details through this table, including profile information, status, and associated metadata. Utilize it to manage and monitor user access to IT resources, ensuring the security and efficiency of your IT environment.
 
 ## Examples
 
 ### Basic info
+Explore which JumpCloud users are activated and when they were created. This can be used to manage user accounts and track their activity.
 
 ```sql
 select
@@ -18,6 +28,7 @@ from
 ```
 
 ### List suspended users
+Discover the segments that contain suspended users to manage system access and maintain security. This helps in identifying potential threats and ensuring only authorized users have access.
 
 ```sql
 select
@@ -33,6 +44,7 @@ where
 ```
 
 ### List users with MFA disabled
+Explore which users have not enabled multi-factor authentication (MFA) to identify potential security risks and enforce stronger access controls.
 
 ```sql
 select
@@ -49,6 +61,7 @@ where
 ```
 
 ### List users not associated with any group
+Determine the areas in which users are not linked to any group. This is useful to identify potential issues with user management and ensure all users are properly grouped for access control and permissions management.
 
 ```sql
 with user_associated_with_groups as (

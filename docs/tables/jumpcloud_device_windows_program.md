@@ -1,12 +1,20 @@
-# Table: jumpcloud_device_windows_program
+---
+title: "Steampipe Table: jumpcloud_device_windows_program - Query JumpCloud Windows Programs using SQL"
+description: "Allows users to query Windows Programs in JumpCloud, specifically the details of each program installed on a Windows device, providing insights into device software inventory."
+---
 
-The `jumpcloud_device_windows_program` table can be used to query information about all the programs installed in a Windows device.
+# Table: jumpcloud_device_windows_program - Query JumpCloud Windows Programs using SQL
 
-To query all applications installed in a MacOS or a Linux device, use the `jumpcloud_device_macos_app` and `jumpcloud_device_linux_package` tables respectively.
+JumpCloud Windows Programs are an integral part of the JumpCloud Directory-as-a-Service platform. They provide detailed information about every program installed on a Windows device managed by JumpCloud. This includes data about the program's name, version, publisher, and installation date, among other attributes.
+
+## Table Usage Guide
+
+The `jumpcloud_device_windows_program` table provides insights into Windows Programs within JumpCloud Directory-as-a-Service platform. As a system administrator or IT manager, explore program-specific details through this table, including the program's name, version, publisher, and installation date. Utilize it to manage and audit your software inventory, such as identifying outdated software versions, verifying software publishers, and tracking software installation dates.
 
 ## Examples
 
 ### Basic info
+Discover the segments that provide information about installed Windows programs on JumpCloud devices, such as their names, versions, and installation details. This can be useful in managing software inventory and tracking device-specific installations.
 
 ```sql
 select
@@ -20,6 +28,7 @@ from
 ```
 
 ### Get the device information
+Determine the areas in which specific program versions are installed across devices. This can help in maintaining software consistency and managing updates.
 
 ```sql
 select
@@ -34,6 +43,7 @@ from
 ```
 
 ### List devices with tailscale app installed
+Identify devices that have the Tailscale app installed to monitor software usage and version control. This can assist in ensuring all devices are running the latest, most secure version of the application.
 
 ```sql
 select
@@ -50,6 +60,7 @@ where
 ```
 
 ### List computers with an older version of zoom app (< 5.12)
+This query is used to identify computers that are running an outdated version of the Zoom application. It's beneficial for IT administrators who need to ensure all devices are using the most recent software for security and functionality purposes.
 
 ```sql
 select
@@ -67,6 +78,7 @@ where
 ```
 
 ### List all programs installed in last 24 hours
+Explore the recently installed programs on your device within the past day. This can help maintain device security by identifying any potentially harmful or unwanted installations.
 
 ```sql
 select

@@ -1,12 +1,20 @@
-# Table: jumpcloud_device_linux_package
+---
+title: "Steampipe Table: jumpcloud_device_linux_package - Query JumpCloud Linux Packages using SQL"
+description: "Allows users to query JumpCloud Linux Packages, specifically the details of Linux packages installed on a device, providing insights into device software inventory and potential vulnerabilities."
+---
 
-The `jumpcloud_device_linux_package` table can be used to query information about all the packages installed on a Linux device.
+# Table: jumpcloud_device_linux_package - Query JumpCloud Linux Packages using SQL
 
-To query all applications installed in a MacOS or a Windows device, use the `jumpcloud_device_macos_app` and `jumpcloud_device_windows_program` tables respectively.
+JumpCloud is a cloud-based directory service that allows IT admins to control user identities and resource access. The Linux Packages in JumpCloud provide details about the software packages installed on a Linux device. It helps in maintaining an updated software inventory and identifying potential software vulnerabilities.
+
+## Table Usage Guide
+
+The `jumpcloud_device_linux_package` table provides insights into Linux packages installed on devices managed by JumpCloud. As a system administrator, explore package-specific details through this table, including package names, versions, and installation status. Utilize it to maintain an updated software inventory, identify outdated packages, and uncover potential vulnerabilities due to unpatched or deprecated software.
 
 ## Examples
 
 ### Basic info
+Explore which Linux packages have been installed on your Jumpcloud devices, along with their versions and installation times. This can help in managing device software and identifying any outdated or unnecessary packages.
 
 ```sql
 select
@@ -20,6 +28,7 @@ from
 ```
 
 ### Get the device information
+Explore the installed software packages on your devices. This allows you to understand what applications are installed on each device, their versions, and when they were installed, which can be crucial for managing software updates and ensuring device security.
 
 ```sql
 select
@@ -34,6 +43,7 @@ from
 ```
 
 ### List devices with tailscale app installed
+Discover the devices that have the Tailscale app installed. This can be useful to assess the spread and usage of the app within your network.
 
 ```sql
 select
@@ -50,6 +60,7 @@ where
 ```
 
 ### List computers with an older version of zoom app (< 5.12)
+Determine the areas in which devices are running an outdated version of the Zoom application. This can help in identifying devices that need to be updated for better security and improved features.
 
 ```sql
 select
@@ -67,6 +78,7 @@ where
 ```
 
 ### List all packages installed in last 24 hours
+Explore the recent system updates by identifying all software packages installed within the last day. This can help in tracking system changes and troubleshooting any issues that may arise due to the new installations.
 
 ```sql
 select
