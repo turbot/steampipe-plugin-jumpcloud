@@ -11,6 +11,9 @@ JumpCloud Windows Programs are an integral part of the JumpCloud Directory-as-a-
 
 The `jumpcloud_device_windows_program` table provides insights into Windows Programs within JumpCloud Directory-as-a-Service platform. As a system administrator or IT manager, explore program-specific details through this table, including the program's name, version, publisher, and installation date. Utilize it to manage and audit your software inventory, such as identifying outdated software versions, verifying software publishers, and tracking software installation dates.
 
+**Important Notes**
+- To query all applications installed in a MacOS or a Linux device, use the `jumpcloud_device_macos_app` and `jumpcloud_device_linux_package` tables respectively.
+
 ## Examples
 
 ### Basic info

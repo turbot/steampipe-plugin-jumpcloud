@@ -11,6 +11,9 @@ JumpCloud is a cloud-based directory service that allows IT admins to control us
 
 The `jumpcloud_device_linux_package` table provides insights into Linux packages installed on devices managed by JumpCloud. As a system administrator, explore package-specific details through this table, including package names, versions, and installation status. Utilize it to maintain an updated software inventory, identify outdated packages, and uncover potential vulnerabilities due to unpatched or deprecated software.
 
+**Important Notes**
+- To query all applications installed in a MacOS or a Windows device, use the `jumpcloud_device_macos_app` and `jumpcloud_device_windows_program` tables respectively.
+
 ## Examples
 
 ### Basic info

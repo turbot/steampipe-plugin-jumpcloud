@@ -11,6 +11,9 @@ JumpCloud is a cloud-based directory service that connects users to their workst
 
 The `jumpcloud_device_macos_app` table provides insights into macOS Apps within JumpCloud's directory service. As a system administrator, explore app-specific details through this table, including app names, versions, and associated macOS devices. Utilize it to uncover information about apps, such as their distribution across devices, outdated versions, and the need for updates or replacements.
 
+**Important Notes**
+- To query all applications installed in a Windows or a Linux device, use the `jumpcloud_device_windows_program` and `jumpcloud_device_linux_package` tables respectively.
+
 ## Examples
 
 ### Basic info
