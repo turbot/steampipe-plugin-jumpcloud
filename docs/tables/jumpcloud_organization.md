@@ -16,7 +16,17 @@ The `jumpcloud_organization` table provides insights into organizations within J
 ### Basic info
 Gain insights into the basic details of your organization, such as its name, unique identifier, logo, and creation date. This can be useful for a general overview or initial audit of your organization's information.
 
-```sql
+```sql+postgres
+select
+  display_name,
+  id,
+  logo_url,
+  created
+from
+  jumpcloud_organization;
+```
+
+```sql+sqlite
 select
   display_name,
   id,
@@ -29,7 +39,20 @@ from
 ### List organizations with no payment options configured
 Explore which organizations have not set up any payment options yet. This is useful for identifying potential billing issues and ensuring all organizations have a proper payment method configured.
 
-```sql
+```sql+postgres
+select
+  display_name,
+  id,
+  logo_url,
+  created
+from
+  jumpcloud_organization
+where
+  not has_credit_card
+  and not has_stripe_customer_id;
+```
+
+```sql+sqlite
 select
   display_name,
   id,
@@ -45,7 +68,7 @@ where
 ### Check if password requires minimum length of 14
 Determine whether your organization's password policy meets security standards by ensuring it requires a minimum length of 14 characters. This is beneficial for maintaining robust security and preventing unauthorized access.
 
-```sql
+```sql+postgres
 select
   display_name,
   id,
@@ -55,15 +78,35 @@ from
   jumpcloud_organization;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  id,
+  json_extract(settings, '$.passwordPolicy.minLength') as password_min_length,
+  json_extract(settings, '$.passwordPolicy.minLength') >= 14 as password_min_length_14_or_greater
+from
+  jumpcloud_organization;
+```
+
 ### Check if password expires within 90 days
 Explore which user accounts have password policies set to expire within 90 days. This is useful for ensuring adherence to security best practices and mitigating potential vulnerabilities.
 
-```sql
+```sql+postgres
 select
   display_name,
   id,
   settings -> 'passwordPolicy' ->> 'passwordExpirationInDays' as password_expiration,
   (settings -> 'passwordPolicy' ->> 'passwordExpirationInDays')::int <= 90 as password_expiration_within_90
+from
+  jumpcloud_organization;
+```
+
+```sql+sqlite
+select
+  display_name,
+  id,
+  json_extract(settings, '$.passwordPolicy.passwordExpirationInDays') as password_expiration,
+  json_extract(settings, '$.passwordPolicy.passwordExpirationInDays') <= 90 as password_expiration_within_90
 from
   jumpcloud_organization;
 ```

@@ -16,7 +16,17 @@ The `jumpcloud_radius_server` table provides insights into Radius Servers within
 ### Basic info
 Discover the segments that are linked to your JumpCloud Radius Server. This query can be used to analyze the name, ID, and organization associated with each network source IP, providing insights into your server's connections.
 
-```sql
+```sql+postgres
+select
+  name,
+  id,
+  organization,
+  network_source_ip
+from
+  jumpcloud_radius_server;
+```
+
+```sql+sqlite
 select
   name,
   id,
@@ -29,7 +39,19 @@ from
 ### List servers with MFA disabled
 Identify instances where Multi-Factor Authentication (MFA) is disabled on servers to enhance security measures by promptly addressing potential vulnerabilities.
 
-```sql
+```sql+postgres
+select
+  name,
+  id,
+  organization,
+  network_source_ip
+from
+  jumpcloud_radius_server
+where
+  mfa = 'DISABLED';
+```
+
+```sql+sqlite
 select
   name,
   id,
@@ -44,7 +66,7 @@ where
 ### List all users that can access the server
 Discover the segments that can access a specific server. This is useful in maintaining security and managing user access by identifying who has access to your server.
 
-```sql
+```sql+postgres
 select
   s.name,
   s.id,
@@ -55,4 +77,17 @@ from
   jumpcloud_radius_server as s,
   jsonb_array_elements(users) as u
   left join jumpcloud_user as ug on u ->> 'id' = ug.id;
+```
+
+```sql+sqlite
+select
+  s.name,
+  s.id,
+  s.organization,
+  s.network_source_ip,
+  ug.display_name as user_name
+from
+  jumpcloud_radius_server as s,
+  json_each(s.users) as u
+  left join jumpcloud_user as ug on json_extract(u.value, '$.id') = ug.id;
 ```

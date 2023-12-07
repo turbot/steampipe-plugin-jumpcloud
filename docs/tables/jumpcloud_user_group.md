@@ -16,7 +16,16 @@ The `jumpcloud_user_group` table provides insights into User Groups within JumpC
 ### Basic info
 Explore which user groups exist within your system, identifying them by their unique attributes such as name and type. This can be useful for understanding the structure and organization of your user groups.
 
-```sql
+```sql+postgres
+select
+  name,
+  id,
+  type
+from
+  jumpcloud_user_group;
+```
+
+```sql+sqlite
 select
   name,
   id,
@@ -28,7 +37,7 @@ from
 ### List groups with samba authentication enabled
 Determine the areas in which user groups are using Samba authentication. This can be useful for understanding which groups have this specific feature enabled, providing insights into your network's security protocols.
 
-```sql
+```sql+postgres
 select
   name,
   id,
@@ -39,10 +48,32 @@ where
   samba_enabled;
 ```
 
+```sql+sqlite
+select
+  name,
+  id,
+  type
+from
+  jumpcloud_user_group
+where
+  samba_enabled = 1;
+```
+
 ### List unused groups
 Identify instances where user groups within JumpCloud are not being utilized. This can help streamline your system management by removing or repurposing these unused groups.
 
-```sql
+```sql+postgres
+select
+  name,
+  id,
+  type
+from
+  jumpcloud_user_group
+where
+  members is null;
+```
+
+```sql+sqlite
 select
   name,
   id,

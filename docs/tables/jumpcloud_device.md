@@ -16,7 +16,19 @@ The `jumpcloud_device` table provides insights into individual devices within th
 ### Basic info
 Explore active devices within your network, identifying their operating system, version, and creation date. This query is useful for maintaining an up-to-date inventory and ensuring all devices are running the correct OS versions.
 
-```sql
+```sql+postgres
+select
+  display_name,
+  serial_number,
+  os,
+  version,
+  active,
+  created
+from
+  jumpcloud_device;
+```
+
+```sql+sqlite
 select
   display_name,
   serial_number,
@@ -31,7 +43,7 @@ from
 ### List devices with MFA disabled
 Explore which devices in your network have multi-factor authentication disabled. This is essential for identifying potential security risks and ensuring all devices comply with security policies.
 
-```sql
+```sql+postgres
 select
   display_name,
   serial_number,
@@ -45,10 +57,24 @@ where
   not allow_multi_factor_authentication;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  serial_number,
+  os,
+  version,
+  active,
+  created
+from
+  jumpcloud_device
+where
+  allow_multi_factor_authentication = 0;
+```
+
 ### List inactive devices
 Explore which devices are inactive in your system. This is useful for identifying unused resources and potentially improving system efficiency.
 
-```sql
+```sql+postgres
 select
   display_name,
   serial_number,
@@ -61,10 +87,23 @@ where
   not active;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  serial_number,
+  os,
+  version,
+  created
+from
+  jumpcloud_device
+where
+  active = 0;
+```
+
 ### Get hardware related info
 Determine the areas in which hardware-related information is needed to gain insights into device specifications such as CPU type, number of logical and physical cores, hardware model, and version. This can be useful in managing resources, optimizing performance, and planning upgrades.
 
-```sql
+```sql+postgres
 select
   display_name,
   serial_number,
@@ -77,10 +116,23 @@ from
   jumpcloud_device;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  serial_number,
+  json_extract(device_info, '$.cpu_type') as cpu_type,
+  json_extract(device_info, '$.cpu_logical_cores') as cpu_logical_cores,
+  json_extract(device_info, '$.cpu_physical_cores') as cpu_physical_cores,
+  json_extract(device_info, '$.hardware_model') as hardware_model,
+  json_extract(device_info, '$.hardware_version') as hardware_version
+from
+  jumpcloud_device;
+```
+
 ### List devices not allowing SSH password authentication
 Explore which devices in your network are configured to disallow SSH password authentication. This is useful for enhancing security by identifying devices that rely on more secure authentication methods.
 
-```sql
+```sql+postgres
 select
   display_name,
   serial_number,
@@ -93,10 +145,23 @@ where
   not allow_ssh_password_authentication;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  serial_number,
+  os,
+  version,
+  created
+from
+  jumpcloud_device
+where
+  allow_ssh_password_authentication = 0;
+```
+
 ### List devices with Full Disk Encryption (FDE) disabled
 Determine the areas in which devices do not have Full Disk Encryption (FDE) enabled. This can be useful in identifying potential security risks and ensuring that all devices comply with company encryption policies.
 
-```sql
+```sql+postgres
 select
   display_name,
   serial_number,
@@ -110,10 +175,24 @@ where
   not (fde -> 'active')::boolean;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  serial_number,
+  os,
+  version,
+  active,
+  created
+from
+  jumpcloud_device
+where
+  not json_extract(fde, '$.active') = 1;
+```
+
 ### List the user details of devices
 Explore active devices by identifying the user details associated with each one. This can be useful for administrators to monitor device usage and track login activity.
 
-```sql
+```sql+postgres
 select
   display_name,
   serial_number,
@@ -124,4 +203,17 @@ select
 from
   jumpcloud_device,
   jsonb_array_elements(user_metrics) as u;
+```
+
+```sql+sqlite
+select
+  display_name,
+  serial_number,
+  active,
+  json_extract(u.value, '$.userName') as username,
+  json_extract(u.value, '$.lastLogin') as last_login_at,
+  json_extract(u.value, '$.admin') as is_admin
+from
+  jumpcloud_device,
+  json_each(user_metrics) as u;
 ```

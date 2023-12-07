@@ -16,7 +16,18 @@ The `jumpcloud_user` table provides insights into user profiles within JumpCloud
 ### Basic info
 Explore which JumpCloud users are activated and when they were created. This can be used to manage user accounts and track their activity.
 
-```sql
+```sql+postgres
+select
+  display_name,
+  username,
+  email,
+  activated,
+  created
+from
+  jumpcloud_user;
+```
+
+```sql+sqlite
 select
   display_name,
   username,
@@ -30,7 +41,7 @@ from
 ### List suspended users
 Discover the segments that contain suspended users to manage system access and maintain security. This helps in identifying potential threats and ensuring only authorized users have access.
 
-```sql
+```sql+postgres
 select
   display_name,
   username,
@@ -43,10 +54,23 @@ where
   suspended;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  username,
+  email,
+  activated,
+  created
+from
+  jumpcloud_user
+where
+  suspended = 1;
+```
+
 ### List users with MFA disabled
 Explore which users have not enabled multi-factor authentication (MFA) to identify potential security risks and enforce stronger access controls.
 
-```sql
+```sql+postgres
 select
   display_name,
   username,
@@ -60,10 +84,24 @@ where
   or not (mfa -> 'configured')::boolean;
 ```
 
+```sql+sqlite
+select
+  display_name,
+  username,
+  email,
+  activated,
+  created
+from
+  jumpcloud_user
+where
+  json_extract(mfa, '$.configured') is null
+  or not json_extract(mfa, '$.configured');
+```
+
 ### List users not associated with any group
 Determine the areas in which users are not linked to any group. This is useful to identify potential issues with user management and ensure all users are properly grouped for access control and permissions management.
 
-```sql
+```sql+postgres
 with user_associated_with_groups as (
   select
     distinct member ->> 'id' as user_id
@@ -80,6 +118,27 @@ select
 from
   jumpcloud_user
 where id not in (
+  select user_id from user_associated_with_groups
+);
+```
+
+```sql+sqlite
+with user_associated_with_groups as (
+  select
+    distinct json_extract(member.value, '$.id') as user_id
+  from
+    jumpcloud_user_group,
+    json_each(members) as member
+)
+select
+  display_name,
+  username,
+  email,
+  activated,
+  created
+from
+  jumpcloud_user
+where jumpcloud_user.id not in (
   select user_id from user_associated_with_groups
 );
 ```
