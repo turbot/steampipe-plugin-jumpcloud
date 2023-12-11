@@ -89,7 +89,4 @@ export JUMPCLOUD_API_KEY=1b234ac9de5f5gh67i89j10k9l366mnop6q965r6
 export JUMPCLOUD_ORG_ID=123a45b6c78d8e9f6gh0769i
 ```
 
-## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-jumpcloud
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
