@@ -8,6 +8,7 @@ short_name: "jumpcloud"
 description: "Steampipe plugin to query servers, applications, user groups, and more from your JumpCloud organization."
 og_description: "Query JumpCloud with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/jumpcloud-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # JumpCloud + Steampipe
