@@ -8,13 +8,14 @@ short_name: "jumpcloud"
 description: "Steampipe plugin to query servers, applications, user groups, and more from your JumpCloud organization."
 og_description: "Query JumpCloud with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/jumpcloud-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # JumpCloud + Steampipe
 
 [JumpCloud](https://jumpcloud.com) provides an open directory platform that helps to unify the technology stack across identity, access, and device management, cost-effectively that doesn't sacrifice security or functionality.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List JumpCloud user details:
 
@@ -88,7 +89,4 @@ export JUMPCLOUD_API_KEY=1b234ac9de5f5gh67i89j10k9l366mnop6q965r6
 export JUMPCLOUD_ORG_ID=123a45b6c78d8e9f6gh0769i
 ```
 
-## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-jumpcloud
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
