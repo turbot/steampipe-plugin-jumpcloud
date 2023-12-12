@@ -17,7 +17,6 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		DefaultGetConfig: &plugin.GetConfig{},
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
-			Schema:      ConfigSchema,
 		},
 		TableMap: map[string]*plugin.Table{
 			"jumpcloud_application":            tableJumpCloudApplication(ctx),
