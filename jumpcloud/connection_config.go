@@ -2,21 +2,11 @@ package jumpcloud
 
 import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
 )
 
 type jumpCloudConfig struct {
-	APIKey *string `cty:"api_key"`
-	OrgID  *string `cty:"org_id"`
-}
-
-var ConfigSchema = map[string]*schema.Attribute{
-	"api_key": {
-		Type: schema.TypeString,
-	},
-	"org_id": {
-		Type: schema.TypeString,
-	},
+	APIKey *string `hcl:"api_key"`
+	OrgID  *string `hcl:"org_id"`
 }
 
 func ConfigInstance() interface{} {
