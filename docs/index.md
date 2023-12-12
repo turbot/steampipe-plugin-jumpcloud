@@ -15,7 +15,7 @@ engines: ["steampipe", "sqlite", "postgres", "export"]
 
 [JumpCloud](https://jumpcloud.com) provides an open directory platform that helps to unify the technology stack across identity, access, and device management, cost-effectively that doesn't sacrifice security or functionality.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List JumpCloud user details:
 
