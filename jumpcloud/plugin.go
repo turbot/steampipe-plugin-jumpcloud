@@ -18,6 +18,12 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 		},
+		ConnectionKeyColumns: []plugin.ConnectionKeyColumn{
+			{
+				Name:    "organization_id",
+				Hydrate: getOrganization,
+			},
+		},
 		TableMap: map[string]*plugin.Table{
 			"jumpcloud_application":            tableJumpCloudApplication(ctx),
 			"jumpcloud_device":                 tableJumpCloudDevice(ctx),

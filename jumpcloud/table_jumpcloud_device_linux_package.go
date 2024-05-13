@@ -92,6 +92,13 @@ func tableJumpCloudDeviceLinuxPackage(_ context.Context) *plugin.Table {
 				Description: "Specifies the release or revision of the package.",
 				Type:        proto.ColumnType_STRING,
 			},
+			{
+				Name:        "organization_id",
+				Description: "Specifies the ID of the organization.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getOrganization,
+				Transform:   transform.FromValue(),
+			},
 
 			// Steampipe standard columns
 			{

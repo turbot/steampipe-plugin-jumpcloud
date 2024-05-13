@@ -136,6 +136,13 @@ func tableJumpCloudDeviceMacOSApp(_ context.Context) *plugin.Table {
 				Description: "The minimum OS version required to install the app.",
 				Type:        proto.ColumnType_STRING,
 			},
+			{
+				Name:        "organization_id",
+				Description: "Specifies the ID of the organization.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getOrganization,
+				Transform:   transform.FromValue(),
+			},
 
 			// Steampipe standard columns
 			{
