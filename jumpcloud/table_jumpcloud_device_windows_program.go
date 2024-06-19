@@ -79,6 +79,13 @@ func tableJumpCloudDeviceWindowsProgram(_ context.Context) *plugin.Table {
 				Description: "The uninstall string of the program.",
 				Type:        proto.ColumnType_STRING,
 			},
+			{
+				Name:        "organization_id",
+				Description: "Specifies the ID of the organization.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getOrganization,
+				Transform:   transform.FromValue(),
+			},
 
 			// Steampipe standard columns
 			{

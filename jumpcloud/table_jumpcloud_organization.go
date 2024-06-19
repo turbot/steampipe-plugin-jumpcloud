@@ -63,6 +63,13 @@ func tableJumpCloudOrganization(_ context.Context) *plugin.Table {
 				Hydrate:     getJumpCloudOrganization,
 			},
 			{
+				Name:        "organization_id",
+				Description: "Specifies the ID of the organization.",
+				Type:        proto.ColumnType_STRING,
+				Hydrate:     getOrganization,
+				Transform:   transform.FromValue(),
+			},
+			{
 				Name:        "entitlement",
 				Description: "Specifies the billing entitlement.",
 				Type:        proto.ColumnType_JSON,
