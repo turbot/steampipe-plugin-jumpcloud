@@ -7,7 +7,7 @@ toolchain go1.23.2
 require (
 	github.com/Subhajit97/jcapi-go v0.0.0-20230213115424-980aab397c07
 	github.com/turbot/go-kit v1.1.0
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.11.6
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.11.7
 )
 
 require (
