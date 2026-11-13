@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 
 	jcapiv1 "github.com/Subhajit97/jcapi-go/v1"
 	jcapiv2 "github.com/Subhajit97/jcapi-go/v2"
@@ -15,7 +15,7 @@ import (
 func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, error) {
 	// Load clientOptions from cache
 	sessionCacheKey := "jumpcloud.apiclient_v2"
-	if cachedData, ok := d.ConnectionManager.Cache.Get(sessionCacheKey); ok {
+	if cachedData, ok := d.ConnectionCache.Get(ctx, sessionCacheKey); ok {
 		return cachedData.(*jcapiv2.APIClient), nil
 	}
 
@@ -40,7 +40,7 @@ func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, 
 
 	// save clientOptions in cache
 	// data will be cached per connection basis
-	d.ConnectionManager.Cache.Set(sessionCacheKey, client)
+	_ = d.ConnectionCache.Set(ctx, sessionCacheKey, client)
 
 	return client, nil
 }
@@ -49,7 +49,7 @@ func getV2Client(ctx context.Context, d *plugin.QueryData) (*jcapiv2.APIClient, 
 func getV1Client(ctx context.Context, d *plugin.QueryData) (*jcapiv1.APIClient, error) {
 	// Load clientOptions from cache
 	sessionCacheKey := "jumpcloud.apiclient_v1"
-	if cachedData, ok := d.ConnectionManager.Cache.Get(sessionCacheKey); ok {
+	if cachedData, ok := d.ConnectionCache.Get(ctx, sessionCacheKey); ok {
 		return cachedData.(*jcapiv1.APIClient), nil
 	}
 
@@ -74,7 +74,7 @@ func getV1Client(ctx context.Context, d *plugin.QueryData) (*jcapiv1.APIClient, 
 
 	// save clientOptions in cache
 	// data will be cached per connection basis
-	d.ConnectionManager.Cache.Set(sessionCacheKey, client)
+	_ = d.ConnectionCache.Set(ctx, sessionCacheKey, client)
 
 	return client, nil
 }
@@ -96,7 +96,7 @@ which will not take any 'x-org-id' header.
 func getOrganizationAPIClient(ctx context.Context, d *plugin.QueryData) (*jcapiv1.APIClient, error) {
 	// Load clientOptions from cache
 	sessionCacheKey := "jumpcloud.apiclient_orgv1"
-	if cachedData, ok := d.ConnectionManager.Cache.Get(sessionCacheKey); ok {
+	if cachedData, ok := d.ConnectionCache.Get(ctx, sessionCacheKey); ok {
 		return cachedData.(*jcapiv1.APIClient), nil
 	}
 
@@ -116,7 +116,7 @@ func getOrganizationAPIClient(ctx context.Context, d *plugin.QueryData) (*jcapiv
 
 	// save clientOptions in cache
 	// data will be cached per connection basis
-	d.ConnectionManager.Cache.Set(sessionCacheKey, client)
+	_ = d.ConnectionCache.Set(ctx, sessionCacheKey, client)
 
 	return client, nil
 }
